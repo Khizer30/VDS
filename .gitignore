@@ -1,0 +1,33 @@
+# Dependencies
+node_modules
+
+# NextJS
+.next
+out
+
+# ML
+models
+Detected Vehicles
+data
+
+# Production
+build
+
+# Debug
+npm-debug.log*
+
+# Environment
+.env*
+
+# Vercel
+.vercel
+
+# Typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# IDE
+.idea
+
+# Extras
+.Extras
