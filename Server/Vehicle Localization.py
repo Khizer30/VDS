@@ -76,7 +76,7 @@ while True:
 
                     # Save Cropped Image
                     cropped_image = video[int(y - h / 2):int(y + h / 2), int(x - w / 2):int(x + w / 2)]
-                    cv.imwrite(f"Detected Vehicles/{counter}.png", cropped_image)
+                    cv.imwrite(f"Localized Vehicles/{counter}.png", cropped_image)
 
                     print(f"No. of Vehicles Detected: {counter}")
 
