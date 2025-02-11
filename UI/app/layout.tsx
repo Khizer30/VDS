@@ -4,12 +4,7 @@ import "@fontsource/roboto";
 import "@fontsource/poppins";
 //
 import "./globals.css";
-
-// Props
-interface Props
-{
-  children: ReactNode;
-}
+import type { Props } from "@lib/interface";
 
 export const metadata: Metadata =
 {

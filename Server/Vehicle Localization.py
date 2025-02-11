@@ -7,11 +7,11 @@ from typing import Tuple, List
 cap: VideoCapture = VideoCapture("data/1.mp4")
 
 # Set Min Width & Height of Rectangle Box
-min_width_rectangle: int = 350
-min_height_rectangle: int = 350
+min_width_rectangle: int = 300
+min_height_rectangle: int = 300
 
 # Position in Frame where Vehicles are Counted
-count_line_position: int = 1000
+count_line_position: int = 750
 
 # Initialize Background Subtractor
 algo: BackgroundSubtractorMOG2 = cv.createBackgroundSubtractorMOG2(history = 100, varThreshold = 40)
