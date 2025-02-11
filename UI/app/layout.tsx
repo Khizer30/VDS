@@ -16,7 +16,7 @@ export const metadata: Metadata =
   title: "Vehicle Detection System",
   description: "A simple Vehicle Detection System.",
   authors: [{ name: "Syed Muhammad Khizer", url: "https://syedmuhammadkhizer.vercel.app" }],
-  icons: "./favicon.png",
+  icons: "/favicon.png",
 };
 
 // Layout

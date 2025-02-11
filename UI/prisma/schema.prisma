@@ -3,6 +3,40 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  name     String    @default("")
+  email    String    @unique @default("")
+  password String    @default("")
+  Vehicle  Vehicle[]
+}
+
+model Vehicle {
+  id          Int         @id @default(autoincrement())
+  make        String      @default("")
+  colour      String      @default("")
+  numberPlate String      @default("")
+  userID      Int         @default(0)
+  user        User        @relation(fields: [userID], references: [id])
+  Detection   Detection[]
+
+  @@index([userID])
+}
+
+model Detection {
+  id          Int      @id @default(autoincrement())
+  make        String   @default("")
+  colour      String   @default("")
+  numberPlate String   @default("")
+  entryTime   DateTime @default(now())
+  exitTime    DateTime @default(now())
+  vehicleID   Int      @default(0)
+  vehicle     Vehicle  @relation(fields: [vehicleID], references: [id])
+
+  @@index([vehicleID])
 }

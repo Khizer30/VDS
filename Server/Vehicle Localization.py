@@ -7,11 +7,11 @@ from typing import Tuple, List
 cap: VideoCapture = VideoCapture("data/1.mp4")
 
 # Set Min Width & Height of Rectangle Box
-min_width_rectangle: int = 250
-min_height_rectangle: int = 250
+min_width_rectangle: int = 350
+min_height_rectangle: int = 350
 
 # Position in Frame where Vehicles are Counted
-count_line_position: int = 750
+count_line_position: int = 1000
 
 # Initialize Background Subtractor
 algo: BackgroundSubtractorMOG2 = cv.createBackgroundSubtractorMOG2(history = 100, varThreshold = 40)
@@ -45,14 +45,14 @@ while True:
     kernel = cv.getStructuringElement(MORPH_ELLIPSE, (5, 5))
     dilatada = cv.morphologyEx(dilat, MORPH_CLOSE, kernel)
     dilatada = cv.morphologyEx(dilatada, MORPH_CLOSE, kernel)
-    countersahpe, h = cv.findContours(dilatada, RETR_TREE, CHAIN_APPROX_SIMPLE)
+    countershape, h = cv.findContours(dilatada, RETR_TREE, CHAIN_APPROX_SIMPLE)
 
     frame_height, frame_width = video.shape[:2]
 
     cv.line(video, (25, count_line_position), (frame_width - 25, count_line_position), (0, 255, 0), 3)
 
     # Loop Over Every Box
-    for i, c in enumerate(countersahpe):
+    for i, c in enumerate(countershape):
         x, y, w, h = cv.boundingRect(c)
         val_counter = (w >= min_width_rectangle) and (h >= min_height_rectangle)
 
