@@ -37,7 +37,7 @@ export default function Layout({ children }: Props): ReactNode
             </Link>
 
             <Link href="/dashboard/history" className=" my-1 px-2 py-2 block font-secondary text-sm menu">
-              View History
+              View Detection History
             </Link>
 
             <Link href="#" className=" my-1 px-2 py-2 block font-secondary text-sm menu">

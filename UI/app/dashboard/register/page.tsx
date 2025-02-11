@@ -8,7 +8,7 @@ export const metadata: Metadata =
   title: "Register Vehicle | Vehicle Detection System"
 };
 
-// Dashboard Page
+// Register Page
 export default function Page(): ReactNode
 {
   return (
