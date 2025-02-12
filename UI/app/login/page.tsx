@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { ReactNode } from "react";
-import { Metadata } from "next";
+import type { ReactNode } from "react";
+import type { Metadata } from "next";
 //
 import LoginForm from "@components/LoginForm";
 import logo from "@images/logo.webp";

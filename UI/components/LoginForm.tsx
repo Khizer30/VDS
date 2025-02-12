@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Lottie from "react-lottie-player";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 //
 import animationData from "@images/lottie/login.json";
 

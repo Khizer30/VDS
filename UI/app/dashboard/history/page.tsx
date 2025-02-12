@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { Metadata } from "next";
+import type { ReactNode } from "react";
+import type { Metadata } from "next";
 import type { Detection } from "@prisma/client";
 //
 import { fetchDetections } from "@lib/server";

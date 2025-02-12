@@ -1,10 +1,8 @@
-import { ReactNode } from "react";
+import { redirect } from "next/navigation";
+import type { ReactNode } from "react";
 
 // Home Page
 export default function Page(): ReactNode
 {
-  return (
-    <>
-    </>
-  );
+  redirect("/login");
 }

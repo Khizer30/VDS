@@ -133,7 +133,7 @@ export default function RegisterForm(): ReactNode
             name="colour"
             required
             className=" my-1 px-4 py-2 font-secondary text-sm text-black boxShadow"
-            value={ inputs.make }
+            value={ inputs.colour }
             onChange={ handleChange }
           >
             <option disabled value="" className=" hidden"> Select Your Vehicle's Colour </option>
