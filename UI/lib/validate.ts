@@ -70,6 +70,48 @@ function validate(type: string, value: string): ResponseInterface
       res.message = "Kindly, Select The Colour of the Vehicle!";
     }
   }
+  else if (type === "email")
+  {
+    if (value !== "")
+    {
+      if (value.length > 0 && value.length <= 100)
+      {
+        res.success = true;
+        res.message = "";
+      }
+      else
+      {
+        res.success = false;
+        res.message = "Email Must Be Between 1 & 100 Characters!";
+      }
+    }
+    else
+    {
+      res.success = false;
+      res.message = "Kindly, Enter The Email!";
+    }
+  }
+  else if (type === "password")
+  {
+    if (value !== "")
+    {
+      if (value.length > 0 && value.length <= 100)
+      {
+        res.success = true;
+        res.message = "";
+      }
+      else
+      {
+        res.success = false;
+        res.message = "Password Must Be Between 1 & 100 Characters!";
+      }
+    }
+    else
+    {
+      res.success = false;
+      res.message = "Kindly, Enter The Password!";
+    }
+  }
 
   return res;
 };

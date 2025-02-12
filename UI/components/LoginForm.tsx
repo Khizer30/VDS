@@ -1,5 +1,6 @@
 "use client";
 import { useState, type ReactNode, type ChangeEvent, type FormEvent } from "react";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import Lottie from "react-lottie-player";
 import { User } from "@prisma/client";
@@ -45,10 +46,7 @@ export default function LoginForm(): ReactNode
 
       if (res.success)
       {
-        setAlert(false);
-        setMessage(res.message);
-
-        setInputs(userObj);
+        redirect("/dashboard");
       }
       else
       {
