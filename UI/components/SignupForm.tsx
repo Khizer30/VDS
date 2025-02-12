@@ -50,7 +50,7 @@ export default function SignupForm(): ReactNode
 
         setInputs(signupInputsObj);
 
-        // setTimeout(() => { redirect("/login"); }, 3000);
+        setTimeout(() => { redirect("/login"); }, 1500);
       }
       else
       {
