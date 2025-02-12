@@ -91,6 +91,27 @@ function validate(type: string, value: string): ResponseInterface
       res.message = "Kindly, Enter The Email!";
     }
   }
+  else if (type === "name")
+  {
+    if (value !== "")
+    {
+      if (value.length > 0 && value.length <= 100)
+      {
+        res.success = true;
+        res.message = "";
+      }
+      else
+      {
+        res.success = false;
+        res.message = "Name Must Be Between 1 & 100 Characters!";
+      }
+    }
+    else
+    {
+      res.success = false;
+      res.message = "Kindly, Enter The Name!";
+    }
+  }
   else if (type === "password")
   {
     if (value !== "")

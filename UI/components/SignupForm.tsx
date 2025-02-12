@@ -69,6 +69,14 @@ export default function SignupForm(): ReactNode
     setAlert(true);
     setMessage("");
 
+    if (inputs.password !== inputs.repassword)
+    {
+      valid = false;
+
+      setAlert(true);
+      setMessage("Passwords Do Not Match!");
+    }
+
     for (let i: number = 0; i < list.length; i++)
     {
       const res: ResponseInterface = validate(list[i], inputs[list[i]]);
@@ -154,8 +162,10 @@ export default function SignupForm(): ReactNode
               type="password"
               required
               maxLength={ 100 }
-              placeholder="Confirm Your Email"
+              placeholder="Confirm Your Password"
               className=" my-1 px-4 py-2 font-secondary text-sm text-black boxShadow"
+              value={ inputs.repassword }
+              onChange={ handleChange }
             />
           </div>
 
