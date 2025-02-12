@@ -22,6 +22,7 @@ export default function Layout({ children }: Props): ReactNode
             <Image
               src={ logo }
               alt="VDH Logo"
+              priority
               draggable={ false }
               className=" w-40"
             />
@@ -40,7 +41,7 @@ export default function Layout({ children }: Props): ReactNode
               View Detection History
             </Link>
 
-            <Link href="#" className=" my-1 px-2 py-2 block font-secondary text-sm menu">
+            <Link href="/login" className=" my-1 px-2 py-2 block font-secondary text-sm menu">
               Log Out
             </Link>
 

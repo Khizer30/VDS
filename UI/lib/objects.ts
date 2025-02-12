@@ -1,6 +1,15 @@
-import type { Vehicle } from "@prisma/client";
+import type { User, Vehicle } from "@prisma/client";
 //
 import type { ResponseInterface } from "@lib/interface";
+
+// User Object
+const userObj: User =
+{
+  id: 0,
+  name: "",
+  email: "",
+  password: ""
+};
 
 // Vehicle Object
 const vehicleObj: Vehicle =
@@ -19,4 +28,4 @@ const responseObj: ResponseInterface =
   message: ""
 };
 
-export { vehicleObj, responseObj };
+export { userObj, vehicleObj, responseObj };

@@ -87,6 +87,7 @@ export default function RegisterForm(): ReactNode
       <form
         method="post"
         autoComplete="off"
+        noValidate
         className=" w-11/12 md:w-1/2"
         onSubmit={ handleSubmit }
       >

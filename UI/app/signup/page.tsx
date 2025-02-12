@@ -20,6 +20,7 @@ export default function Page(): ReactNode
           <Image
             src={ logo }
             alt="VDH Logo"
+            priority
             draggable={ false }
             className=" w-40"
           />
