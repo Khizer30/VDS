@@ -13,4 +13,13 @@ interface ResponseInterface
   message: string;
 }
 
-export type { Props, ResponseInterface };
+// Signup Inputs Interface
+interface SignupInputsInterface
+{
+  email: string;
+  name: string;
+  password: string;
+  repassword: string;
+}
+
+export type { Props, ResponseInterface, SignupInputsInterface };

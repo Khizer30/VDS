@@ -1,25 +1,108 @@
 "use client";
+import { useState, type ReactNode, type ChangeEvent, type FormEvent } from "react";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import Lottie from "react-lottie-player";
-import type { ReactNode } from "react";
 //
 import animationData from "@images/lottie/signup.json";
+import validate from "@lib/validate";
+import { userObj, signupInputsObj } from "@lib/objects";
+import type { ResponseInterface, SignupInputsInterface } from "@lib/interface";
 
 // Signup
 export default function SignupForm(): ReactNode
 {
+  const [inputs, setInputs] = useState<SignupInputsInterface>(signupInputsObj);
+  const [alert, setAlert] = useState<boolean>(true);
+  const [message, setMessage] = useState<string>("");
+
+  // Handle Change
+  function handleChange(e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>): void
+  {
+    setInputs((x: SignupInputsInterface) => ({ ...x, [e.target.name]: e.target.value }));
+  }
+
+  // Handle Submit
+  async function handleSubmit(e: FormEvent<HTMLFormElement>): Promise<void>
+  {
+    e.preventDefault();
+
+    if (validateInputs())
+    {
+      const response: Response = await fetch("/api/signup",
+        {
+          mode: "same-origin",
+          cache: "no-cache",
+          method: "POST",
+          headers:
+          {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ ...userObj, name: inputs.name, email: inputs.email, password: inputs.password })
+        });
+
+      const res: ResponseInterface = await response.json();
+
+      if (res.success)
+      {
+        setAlert(false);
+        setMessage(res.message);
+
+        setInputs(signupInputsObj);
+
+        // setTimeout(() => { redirect("/login"); }, 3000);
+      }
+      else
+      {
+        setAlert(true);
+        setMessage(res.message);
+      }
+    }
+  }
+
+  // Validate Inputs
+  function validateInputs(): boolean
+  {
+    let valid: boolean = true;
+    const list: string[] = ["email", "name", "password"];
+
+    setAlert(true);
+    setMessage("");
+
+    for (let i: number = 0; i < list.length; i++)
+    {
+      const res: ResponseInterface = validate(list[i], inputs[list[i]]);
+
+      if (!res.success)
+      {
+        valid = false;
+
+        setAlert(true);
+        setMessage(res.message);
+
+        break;
+      }
+    }
+
+    return valid;
+  }
+
   return (
     <>
       <div className=" col-span-1 flex justify-center items-center">
         <form
-          action="#"
           method="post"
+          autoComplete="off"
+          noValidate
           className=" w-11/12 md:w-5/6 p-4 md:p-8 border rounded-xl border-quaternary"
+          onSubmit={ handleSubmit }
         >
 
           <h3 className=" my-2 font-secondary font-light text-lg"> Welcome! </h3>
           <h1 className=" my-2 font-secondary font-bold text-3xl"> Sign up to </h1>
-          <h2 className=" mt-2 mb-8 font-secondary"> Vehicle Detection System </h2>
+          <h2 className=" my-2 font-secondary"> Vehicle Detection System </h2>
+
+          <p className={ (message ? "" : " invisible") + (alert ? " bg-red" : " bg-green") + " py-3 font-secondary text-sm text-center text-white rounded transition-all duration-300 hover:scale-95" }> { message || <br /> } </p>
 
           <div className=" my-2 flex flex-col">
             <label htmlFor="email" className=" my-1 font-secondary text-sm"> Email </label>
@@ -30,21 +113,23 @@ export default function SignupForm(): ReactNode
               required
               maxLength={ 100 }
               placeholder="Enter Your Email"
-              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
               className=" my-1 px-4 py-2 font-secondary text-sm text-black boxShadow"
+              value={ inputs.email }
+              onChange={ handleChange }
             />
           </div>
 
           <div className=" my-2 flex flex-col">
-            <label htmlFor="username" className=" my-1 font-secondary text-sm"> Username </label>
+            <label htmlFor="name" className=" my-1 font-secondary text-sm"> Name </label>
             <input
-              name="username"
+              name="name"
               type="text"
               required
               maxLength={ 100 }
-              placeholder="Enter Your Username"
-              pattern="[a-zA-Z]+$"
+              placeholder="Enter Your Name"
               className=" my-1 px-4 py-2 font-secondary text-sm text-black boxShadow"
+              value={ inputs.name }
+              onChange={ handleChange }
             />
           </div>
 
@@ -56,8 +141,9 @@ export default function SignupForm(): ReactNode
               required
               maxLength={ 100 }
               placeholder="Enter Your Password"
-              pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
               className=" my-1 px-4 py-2 font-secondary text-sm text-black boxShadow"
+              value={ inputs.password }
+              onChange={ handleChange }
             />
           </div>
 
@@ -69,7 +155,6 @@ export default function SignupForm(): ReactNode
               required
               maxLength={ 100 }
               placeholder="Confirm Your Email"
-              pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
               className=" my-1 px-4 py-2 font-secondary text-sm text-black boxShadow"
             />
           </div>

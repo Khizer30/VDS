@@ -1,6 +1,6 @@
 import type { User, Vehicle } from "@prisma/client";
 //
-import type { ResponseInterface } from "@lib/interface";
+import type { ResponseInterface, SignupInputsInterface } from "@lib/interface";
 
 // User Object
 const userObj: User =
@@ -28,4 +28,13 @@ const responseObj: ResponseInterface =
   message: ""
 };
 
-export { userObj, vehicleObj, responseObj };
+// Signup Inputs Object
+const signupInputsObj: SignupInputsInterface =
+{
+  email: "",
+  name: "",
+  password: "",
+  repassword: ""
+};
+
+export { userObj, vehicleObj, responseObj, signupInputsObj };
