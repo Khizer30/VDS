@@ -1,22 +1,21 @@
 "use client";
 import { useState, type ReactNode, type ChangeEvent, type FormEvent } from "react";
-import type { Vehicle } from "@prisma/client";
 //
 import validate from "@lib/validate";
-import { vehicleObj } from "@lib/objects";
-import type { ResponseInterface } from "@lib/interface";
+import { registerVehicleInputsObj } from "@lib/objects";
+import type { ResponseInterface, RegisterVehicleInputsInterface } from "@lib/interface";
 
 // Register Vehicle Form
 export default function RegisterForm(): ReactNode
 {
-  const [inputs, setInputs] = useState<Vehicle>(vehicleObj);
+  const [inputs, setInputs] = useState<RegisterVehicleInputsInterface>(registerVehicleInputsObj);
   const [alert, setAlert] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
 
   // Handle Change
   function handleChange(e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>): void
   {
-    setInputs((x: Vehicle) => ({ ...x, [e.target.name]: e.target.value }));
+    setInputs((x: RegisterVehicleInputsInterface) => ({ ...x, [e.target.name]: e.target.value }));
   }
 
   // Handle Submit
@@ -45,7 +44,7 @@ export default function RegisterForm(): ReactNode
         setAlert(false);
         setMessage(res.message);
 
-        setInputs(vehicleObj);
+        setInputs(registerVehicleInputsObj);
       }
       else
       {
@@ -59,7 +58,7 @@ export default function RegisterForm(): ReactNode
   function validateInputs(): boolean
   {
     let valid: boolean = true;
-    const list: string[] = ["numberPlate", "make", "colour"];
+    const list: string[] = ["make", "colour", "numberPlate"];
 
     setAlert(true);
     setMessage("");
@@ -97,24 +96,10 @@ export default function RegisterForm(): ReactNode
         <p className={ (message ? "" : " invisible") + (alert ? " bg-red" : " bg-green") + " py-3 font-secondary text-sm text-center text-white rounded transition-all duration-300 hover:scale-95" }> { message || <br /> } </p>
 
         <div className=" my-2 flex flex-col">
-          <label htmlFor="numberPlate" className=" my-1 font-secondary text-sm"> Number Plate </label>
-          <input
-            name="numberPlate"
-            type="text"
-            autoFocus
-            required
-            maxLength={ 100 }
-            placeholder="Enter Your Vehicle's Number Plate"
-            className=" my-1 px-4 py-2 font-secondary text-sm text-black boxShadow"
-            value={ inputs.numberPlate }
-            onChange={ handleChange }
-          />
-        </div>
-
-        <div className=" my-2 flex flex-col">
           <label htmlFor="make" className=" my-1 font-secondary text-sm"> Make & Model </label>
           <select
             name="make"
+            autoFocus
             required
             className=" my-1 px-4 py-2 font-secondary text-sm text-black boxShadow"
             value={ inputs.make }
@@ -142,6 +127,20 @@ export default function RegisterForm(): ReactNode
             <option value="Silver"> Silver </option>
             <option value="White"> White </option>
           </select>
+        </div>
+
+        <div className=" my-2 flex flex-col">
+          <label htmlFor="numberPlate" className=" my-1 font-secondary text-sm"> Number Plate </label>
+          <input
+            name="numberPlate"
+            type="text"
+            required
+            maxLength={ 100 }
+            placeholder="Enter Your Vehicle's Number Plate"
+            className=" my-1 px-4 py-2 font-secondary text-sm text-black boxShadow"
+            value={ inputs.numberPlate }
+            onChange={ handleChange }
+          />
         </div>
 
         <div className=" mt-4 mb-2 ">

@@ -1,6 +1,6 @@
 import type { User, Vehicle } from "@prisma/client";
 //
-import type { ResponseInterface, SignupInputsInterface } from "@lib/interface";
+import type { ResponseInterface, SignupInputsInterface, RegisterVehicleInputsInterface } from "@lib/interface";
 
 // User Object
 const userObj: User =
@@ -15,10 +15,10 @@ const userObj: User =
 const vehicleObj: Vehicle =
 {
   id: 0,
-  make: "",
-  colour: "",
-  numberPlate: "",
-  userID: 0
+  makeID: 0,
+  colourID: 0,
+  userID: 0,
+  numberPlate: ""
 };
 
 // Response Object
@@ -37,4 +37,12 @@ const signupInputsObj: SignupInputsInterface =
   repassword: ""
 };
 
-export { userObj, vehicleObj, responseObj, signupInputsObj };
+// Register Vehicle Inputs Object
+const registerVehicleInputsObj: RegisterVehicleInputsInterface =
+{
+  make: "",
+  colour: "",
+  numberPlate: ""
+};
+
+export { userObj, vehicleObj, responseObj, signupInputsObj, registerVehicleInputsObj };

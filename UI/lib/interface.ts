@@ -22,4 +22,12 @@ interface SignupInputsInterface
   repassword: string;
 }
 
-export type { Props, ResponseInterface, SignupInputsInterface };
+// Register Vehicle Inputs Interface
+interface RegisterVehicleInputsInterface
+{
+  make: string;
+  colour: string;
+  numberPlate: string;
+}
+
+export type { Props, ResponseInterface, SignupInputsInterface, RegisterVehicleInputsInterface };

@@ -9,7 +9,7 @@ async function fetchDetections(userID: number): Promise<Detection[]>
 
   try
   {
-    detections = await prisma.detection.findMany({ where: { vehicle: { user: { id: userID } } }, orderBy: { entryTime: "desc" } });
+    detections = await prisma.detection.findMany({ where: { vehicle: { user: { id: userID } } }, orderBy: { timestamp: "desc" } });
   }
   catch (error: unknown)
   {

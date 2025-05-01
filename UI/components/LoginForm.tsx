@@ -1,14 +1,17 @@
 "use client";
 import { useState, type ReactNode, type ChangeEvent, type FormEvent } from "react";
 import { redirect } from "next/navigation";
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import Lottie from "react-lottie-player";
 import { User } from "@prisma/client";
 //
 import animationData from "@images/lottie/login.json";
 import validate from "@lib/validate";
 import { userObj } from "@lib/objects";
 import type { ResponseInterface } from "@lib/interface";
+
+// Import Lottie
+const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 
 // Login From
 export default function LoginForm(): ReactNode

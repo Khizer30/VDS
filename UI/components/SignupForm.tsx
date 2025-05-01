@@ -1,13 +1,16 @@
 "use client";
 import { useState, type ReactNode, type ChangeEvent, type FormEvent } from "react";
 import { redirect } from "next/navigation";
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import Lottie from "react-lottie-player";
 //
 import animationData from "@images/lottie/signup.json";
 import validate from "@lib/validate";
 import { userObj, signupInputsObj } from "@lib/objects";
 import type { ResponseInterface, SignupInputsInterface } from "@lib/interface";
+
+// Import Lottie
+const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 
 // Signup
 export default function SignupForm(): ReactNode

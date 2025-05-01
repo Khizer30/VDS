@@ -19,11 +19,10 @@ export default async function Page(): Promise<ReactNode>
   {
     return (
       <tr key={ i }>
-        <td className=" w-40 p-3 font-secondary text-sm border border-quaternary"> { x.numberPlate } </td>
         <td className=" w-40 p-3 font-secondary text-sm border border-quaternary"> { x.make } </td>
         <td className=" w-40 p-3 font-secondary text-sm border border-quaternary"> { x.colour } </td>
-        <td className=" w-40 p-3 font-secondary text-sm border border-quaternary"> { x.entryTime.toLocaleString() } </td>
-        <td className=" w-40 p-3 font-secondary text-sm border border-quaternary"> { x.exitTime.toLocaleString() } </td>
+        <td className=" w-40 p-3 font-secondary text-sm border border-quaternary"> { x.numberPlate } </td>
+        <td className=" w-40 p-3 font-secondary text-sm border border-quaternary"> { x.timestamp.toLocaleString() } </td>
       </tr>
     );
   }
@@ -36,11 +35,10 @@ export default async function Page(): Promise<ReactNode>
           <table>
             <thead>
               <tr>
-                <th className=" w-40 p-3 font-secondary text-sm text-white border border-quaternary bg-black"> License Plate </th>
                 <th className=" w-40 p-3 font-secondary text-sm text-white border border-quaternary bg-black"> Model </th>
                 <th className=" w-40 p-3 font-secondary text-sm text-white border border-quaternary bg-black"> Colour </th>
-                <th className=" w-40 p-3 font-secondary text-sm text-white border border-quaternary bg-black"> Entry Timestamp </th>
-                <th className=" w-40 p-3 font-secondary text-sm text-white border border-quaternary bg-black"> Exit Timestamp </th>
+                <th className=" w-40 p-3 font-secondary text-sm text-white border border-quaternary bg-black"> License Plate </th>
+                <th className=" w-40 p-3 font-secondary text-sm text-white border border-quaternary bg-black"> Timestamp </th>
               </tr>
             </thead>
             <tbody>
