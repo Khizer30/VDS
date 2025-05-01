@@ -5,11 +5,6 @@ node_modules
 .next
 out
 
-# ML
-models
-Localized Vehicles
-data
-
 # Production
 build
 
