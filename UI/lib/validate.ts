@@ -3,12 +3,14 @@ import { responseObj } from "@lib/objects";
 import type { ResponseInterface } from "@lib/interface";
 
 // Validate
-function validate(type: string, value: string): ResponseInterface
+function validate(type: string, value: string | number): ResponseInterface
 {
   const res: ResponseInterface = responseObj;
 
   if (type === "numberPlate")
   {
+    value = value.toString();
+
     if (value !== "")
     {
       if (value.length > 0 && value.length <= 100)
@@ -28,41 +30,29 @@ function validate(type: string, value: string): ResponseInterface
       res.message = "Kindly, Enter The Number Plate No.!";
     }
   }
-  else if (type === "make")
+  else if (type === "makeID")
   {
-    if (value !== "")
+    value = +value;
+
+    if (value !== 0)
     {
-      if (value.length > 0 && value.length <= 100)
-      {
-        res.success = true;
-        res.message = "";
-      }
-      else
-      {
-        res.success = false;
-        res.message = "Make & Model Must Be Between 1 & 100 Characters!";
-      }
+      res.success = true;
+      res.message = "";
     }
     else
     {
       res.success = false;
-      res.message = "Kindly, Select The Make & Model!";
+      res.message = "Kindly, Select The Make & Model of the Vehicle!";
     }
   }
-  else if (type === "colour")
+  else if (type === "colourID")
   {
-    if (value !== "")
+    value = +value;
+
+    if (value !== 0)
     {
-      if (value.length > 0 && value.length <= 100)
-      {
-        res.success = true;
-        res.message = "";
-      }
-      else
-      {
-        res.success = false;
-        res.message = "Colour Must Be Between 1 & 100 Characters!";
-      }
+      res.success = true;
+      res.message = "";
     }
     else
     {
@@ -72,6 +62,8 @@ function validate(type: string, value: string): ResponseInterface
   }
   else if (type === "email")
   {
+    value = value.toString();
+
     if (value !== "")
     {
       if (value.length > 0 && value.length <= 100)
@@ -93,6 +85,8 @@ function validate(type: string, value: string): ResponseInterface
   }
   else if (type === "name")
   {
+    value = value.toString();
+
     if (value !== "")
     {
       if (value.length > 0 && value.length <= 100)
@@ -114,6 +108,8 @@ function validate(type: string, value: string): ResponseInterface
   }
   else if (type === "password")
   {
+    value = value.toString();
+
     if (value !== "")
     {
       if (value.length > 0 && value.length <= 100)

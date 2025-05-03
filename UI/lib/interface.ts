@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { Make, Colour } from "@prisma/client";
 
 // Props
 interface Props
@@ -22,12 +23,11 @@ interface SignupInputsInterface
   repassword: string;
 }
 
-// Register Vehicle Inputs Interface
-interface RegisterVehicleInputsInterface
+// Makes & Colours Interface
+interface MakesAndColoursInterface
 {
-  make: string;
-  colour: string;
-  numberPlate: string;
+  makes: Make[];
+  colours: Colour[];
 }
 
-export type { Props, ResponseInterface, SignupInputsInterface, RegisterVehicleInputsInterface };
+export type { Props, ResponseInterface, SignupInputsInterface, MakesAndColoursInterface };

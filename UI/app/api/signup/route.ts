@@ -38,6 +38,7 @@ export async function POST(req: NextRequest): Promise<NextResponse>
   }
   catch (error: unknown)
   {
+    console.log(error);
     response.success = false;
     response.message = "Error Signing Up! Try Later...";
   }

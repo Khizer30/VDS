@@ -1,21 +1,22 @@
 "use client";
 import { useState, type ReactNode, type ChangeEvent, type FormEvent } from "react";
+import { Make, Colour, Vehicle } from "@prisma/client";
 //
 import validate from "@lib/validate";
-import { registerVehicleInputsObj } from "@lib/objects";
-import type { ResponseInterface, RegisterVehicleInputsInterface } from "@lib/interface";
+import { vehicleObj } from "@lib/objects";
+import type { ResponseInterface, MakesAndColoursInterface } from "@lib/interface";
 
 // Register Vehicle Form
-export default function RegisterForm(): ReactNode
+export default function RegisterForm({ makes, colours }: MakesAndColoursInterface): ReactNode
 {
-  const [inputs, setInputs] = useState<RegisterVehicleInputsInterface>(registerVehicleInputsObj);
+  const [inputs, setInputs] = useState<Vehicle>(vehicleObj);
   const [alert, setAlert] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
 
   // Handle Change
   function handleChange(e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>): void
   {
-    setInputs((x: RegisterVehicleInputsInterface) => ({ ...x, [e.target.name]: e.target.value }));
+    setInputs((x: Vehicle) => ({ ...x, [e.target.name]: e.target.value }));
   }
 
   // Handle Submit
@@ -44,7 +45,7 @@ export default function RegisterForm(): ReactNode
         setAlert(false);
         setMessage(res.message);
 
-        setInputs(registerVehicleInputsObj);
+        setInputs(vehicleObj);
       }
       else
       {
@@ -58,7 +59,7 @@ export default function RegisterForm(): ReactNode
   function validateInputs(): boolean
   {
     let valid: boolean = true;
-    const list: string[] = ["make", "colour", "numberPlate"];
+    const list: string[] = ["makeID", "colourID", "numberPlate"];
 
     setAlert(true);
     setMessage("");
@@ -81,6 +82,14 @@ export default function RegisterForm(): ReactNode
     return valid;
   }
 
+  // Option Mapper
+  function optionMapper(x: Make | Colour): ReactNode
+  {
+    return (
+      <option value={ x.id } key={ x.id }> { x.name } </option>
+    );
+  }
+
   return (
     <>
       <form
@@ -98,34 +107,29 @@ export default function RegisterForm(): ReactNode
         <div className=" my-2 flex flex-col">
           <label htmlFor="make" className=" my-1 font-secondary text-sm"> Make & Model </label>
           <select
-            name="make"
+            name="makeID"
             autoFocus
             required
             className=" my-1 px-4 py-2 font-secondary text-sm text-black boxShadow"
-            value={ inputs.make }
+            value={ inputs.makeID }
             onChange={ handleChange }
           >
-            <option disabled value="" className=" hidden"> Select Your Vehicle's Make & Model </option>
-            <option value="Honda City"> Honda City </option>
-            <option value="Suzuki Alto"> Suzuki Alto </option>
-            <option value="Suzuki Mehran"> Suzuki Mehran </option>
-            <option value="Toyota Corolla"> Toyota Corolla </option>
+            <option disabled value={ 0 } className=" hidden"> Select Your Vehicle's Make & Model </option>
+            { makes.map(optionMapper) }
           </select>
         </div>
 
         <div className=" my-2 flex flex-col">
           <label htmlFor="colour" className=" my-1 font-secondary text-sm"> Colour </label>
           <select
-            name="colour"
+            name="colourID"
             required
             className=" my-1 px-4 py-2 font-secondary text-sm text-black boxShadow"
-            value={ inputs.colour }
+            value={ inputs.colourID }
             onChange={ handleChange }
           >
-            <option disabled value="" className=" hidden"> Select Your Vehicle's Colour </option>
-            <option value="Black"> Black </option>
-            <option value="Silver"> Silver </option>
-            <option value="White"> White </option>
+            <option disabled value={ 0 } className=" hidden"> Select Your Vehicle's Colour </option>
+            { colours.map(optionMapper) }
           </select>
         </div>
 

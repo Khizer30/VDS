@@ -2,6 +2,8 @@ import { ReactNode } from "react";
 import { Metadata } from "next";
 //
 import RegisterForm from "@components/RegisterForm";
+import { fetchMakeAndColour } from "@lib/server";
+import type { MakesAndColoursInterface } from "@lib/interface";
 
 export const metadata: Metadata =
 {
@@ -9,12 +11,14 @@ export const metadata: Metadata =
 };
 
 // Register Page
-export default function Page(): ReactNode
+export default async function Page(): Promise<ReactNode>
 {
+  const { makes, colours }: MakesAndColoursInterface = await fetchMakeAndColour();
+
   return (
     <>
       <div className=" w-full h-full flex justify-center items-center">
-        <RegisterForm />
+        <RegisterForm makes={ makes } colours={ colours } />
       </div>
     </>
   );

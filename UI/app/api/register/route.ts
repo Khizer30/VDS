@@ -12,15 +12,15 @@ export async function POST(req: NextRequest): Promise<NextResponse>
 
   try
   {
-    const { make, colour, numberPlate, userID }: Vehicle = await req.json();
+    const { makeID, colourID, userID, numberPlate }: Vehicle = await req.json();
 
     await prisma.vehicle.create({
       data:
       {
-        make: make,
-        colour: colour,
+        makeID: +makeID,
+        colourID: +colourID,
+        userID: 1,
         numberPlate: numberPlate,
-        userID: 1
       }
     });
 
@@ -29,6 +29,7 @@ export async function POST(req: NextRequest): Promise<NextResponse>
   }
   catch (error: unknown)
   {
+    console.log(error);
     response.success = false;
     response.message = "Error Adding Vehicle! Try Later...";
   }
