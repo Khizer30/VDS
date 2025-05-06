@@ -17,7 +17,7 @@ export default function Layout({ children }: Props): ReactNode
     <>
       <div className=" h-screen flex">
 
-        <aside className=" w-64 p-4 border-r-2">
+        <aside className=" w-1/6 p-6 border-r-2">
           <div className=" my-4 flex justify-center items-center">
             <Image
               src={ logo }
@@ -48,7 +48,7 @@ export default function Layout({ children }: Props): ReactNode
           </nav>
         </aside>
 
-        <main className="flex-1 p-6">
+        <main className=" w-5/6 p-6">
           { children }
         </main>
 

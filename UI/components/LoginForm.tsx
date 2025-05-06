@@ -3,10 +3,11 @@ import { useState, type ReactNode, type ChangeEvent, type FormEvent } from "reac
 import { redirect } from "next/navigation";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 //
 import animationData from "@images/lottie/login.json";
 import validate from "@lib/validate";
+import { auth } from "@lib/supabase";
 import { userObj } from "@lib/objects";
 import type { ResponseInterface } from "@lib/interface";
 
@@ -33,29 +34,30 @@ export default function LoginForm(): ReactNode
 
     if (validateInputs())
     {
-      const response: Response = await fetch("/api/login",
-        {
-          mode: "same-origin",
-          cache: "no-cache",
-          method: "POST",
-          headers:
-          {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(inputs)
-        });
+      login();
+    }
+  }
 
-      const res: ResponseInterface = await response.json();
+  // Login
+  async function login(): Promise<void>
+  {
+    const { data, error } = await auth.signInWithPassword({ email: inputs.email, password: inputs.password });
 
-      if (res.success)
+    if (data.user && data.session)
+    {
+      redirect("/dashboard");
+    }
+    else if (error)
+    {
+      let message: string = error.message;
+
+      if (message === "Invalid login credentials")
       {
-        redirect("/dashboard");
+        message = "Invalid Email or Password. Please Try Again.";
       }
-      else
-      {
-        setAlert(true);
-        setMessage(res.message);
-      }
+
+      setAlert(true);
+      setMessage(message);
     }
   }
 

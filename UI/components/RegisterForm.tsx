@@ -1,6 +1,6 @@
 "use client";
 import { useState, type ReactNode, type ChangeEvent, type FormEvent } from "react";
-import { Make, Colour, Vehicle } from "@prisma/client";
+import type { Make, Colour, Vehicle } from "@prisma/client";
 //
 import validate from "@lib/validate";
 import { vehicleObj } from "@lib/objects";
