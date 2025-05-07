@@ -14,6 +14,17 @@ It includes:
 
 ## 🚀 Features
 
+### UI Component
+
+- User sign-up and login.
+- Vehicle registration.
+- Viewing detection history.
+- Built using:
+    - **Next.js** – Server-side rendering
+    - **React.js** – Dynamic frontend
+    - **TailwindCSS** – Styling
+    - **Prisma** – Database ORM
+
 ### ML Component
 
 - Real-time vehicle detection from live or pre-recorded video.
@@ -29,17 +40,6 @@ It includes:
     - **Ultralytics** – YOLO Library
     - **OpenCV** – Vehicle Extraction
     - **PyTorch** – Training Machine Learning Models
-
-### UI Component
-
-- User sign-up and login.
-- Vehicle registration.
-- Viewing detection history.
-- Built using:
-    - **Next.js** – Server-side rendering
-    - **React.js** – Dynamic frontend
-    - **TailwindCSS** – Styling
-    - **Prisma** – Database ORM
 
 ---
 
@@ -88,8 +88,6 @@ It includes:
 
 ---
 
----
-
 ### 🔧 ML Component Setup
 
 1. **Install Dependencies**
@@ -110,7 +108,7 @@ It includes:
     python vehicle_extraction.py
     ```
 
-
+---
 
 ## 🔍 How It Works
 
@@ -127,3 +125,5 @@ It includes:
 ## 👤 Author
 
 Developed by **Syed Muhammad Khizer**
+
+---
