@@ -4,10 +4,11 @@ The **Vehicle Detection System (VDS)** is a two-part application that manages ve
 
 It includes:
 
-1. **Machine Learning (ML) Component**  
-   Detects vehicles in video feeds, extracts details, and stores them in a database.
-2. **User Interface (UI) Component**  
+1. **User Interface (UI) Component**  
    A Next.js-based frontend that handles user authentication, vehicle registration, and viewing detection records.
+
+2. **Machine Learning (ML) Component**  
+   Detects vehicles in video feeds, extracts details, and stores them in a database.
 
 ---
 
@@ -53,28 +54,6 @@ It includes:
 
 ---
 
-### 🔧 ML Component Setup
-
-1. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-2. **Environment Variables**
-
-   Create a `.env` file in the ML directory:
-    ```bash
-    SUPABASE_URL=<Your Supabase URL>
-    SUPABASE_KEY=<Your Supabase API Key>
-    ```
-
-3. **Run the ML Component**
-    ```bash
-    python vehicle_extraction.py
-    ```
-
----
-
 ### 🖥️ UI Component Setup
 
 1. **Install Dependencies**
@@ -108,6 +87,30 @@ It includes:
     ```
 
 ---
+
+---
+
+### 🔧 ML Component Setup
+
+1. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Environment Variables**
+
+   Create a `.env` file in the ML directory:
+    ```bash
+    SUPABASE_URL=<Your Supabase URL>
+    SUPABASE_KEY=<Your Supabase API Key>
+    ```
+
+3. **Run the ML Component**
+    ```bash
+    python vehicle_extraction.py
+    ```
+
+
 
 ## 🔍 How It Works
 
