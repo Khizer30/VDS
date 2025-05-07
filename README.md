@@ -122,6 +122,8 @@ It includes:
 
     - If not, access is denied.
 
+---
+
 ## 👤 Author
 
 Developed by **Syed Muhammad Khizer**
