@@ -102,12 +102,18 @@ export default function RegisterForm({ makes, colours }: MakesAndColoursInterfac
 
         <h1 className=" mt-2 mb-8 font-secondary font-bold text-center text-3xl"> Register Your Vehcile </h1>
 
-        <p className={ (message ? "" : " invisible") + (alert ? " bg-red" : " bg-green") + " py-3 font-secondary text-sm text-center text-white rounded transition-all duration-300 hover:scale-95" }> { message || <br /> } </p>
+        <p
+          data-testid="message"
+          className={ (message ? "" : " invisible") + (alert ? " bg-red" : " bg-green") + " py-3 font-secondary text-sm text-center text-white rounded transition-all duration-300 hover:scale-95" }
+        >
+          { message || <br /> }
+        </p>
 
         <div className=" my-2 flex flex-col">
-          <label htmlFor="make" className=" my-1 font-secondary text-sm"> Make & Model </label>
+          <label htmlFor="makeID" className=" my-1 font-secondary text-sm"> Make & Model </label>
           <select
             name="makeID"
+            data-testid="makeID"
             autoFocus
             required
             className=" my-1 px-4 py-2 font-secondary text-sm text-black boxShadow"
@@ -120,9 +126,10 @@ export default function RegisterForm({ makes, colours }: MakesAndColoursInterfac
         </div>
 
         <div className=" my-2 flex flex-col">
-          <label htmlFor="colour" className=" my-1 font-secondary text-sm"> Colour </label>
+          <label htmlFor="colourID" className=" my-1 font-secondary text-sm"> Colour </label>
           <select
             name="colourID"
+            data-testid="colourID"
             required
             className=" my-1 px-4 py-2 font-secondary text-sm text-black boxShadow"
             value={ inputs.colourID }
@@ -137,6 +144,7 @@ export default function RegisterForm({ makes, colours }: MakesAndColoursInterfac
           <label htmlFor="numberPlate" className=" my-1 font-secondary text-sm"> Number Plate </label>
           <input
             name="numberPlate"
+            data-testid="numberPlate"
             type="text"
             required
             maxLength={ 100 }
@@ -149,6 +157,7 @@ export default function RegisterForm({ makes, colours }: MakesAndColoursInterfac
 
         <div className=" mt-4 mb-2 ">
           <button
+            data-testid="submit"
             type="submit"
             className=" w-full my-4 p-3 font-secondary text-sm btn"
           >
