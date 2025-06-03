@@ -1,12 +1,14 @@
 "use client";
-import { useState, useEffect, type ReactNode, type ChangeEvent, type FormEvent } from "react";
+import { useState, type ReactNode, type ChangeEvent, type FormEvent } from "react";
 import { redirect } from "next/navigation";
-import { auth } from "@lib/supabase";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 //
+import Loading from "@components/Loading";
 import animationData from "@images/lottie/signup.json";
 import validate from "@lib/validate";
+import { useAuth } from "@components/AuthContext";
+import { auth } from "@lib/supabase";
 import { userObj, signupInputsObj } from "@lib/objects";
 import type { ResponseInterface, SignupInputsInterface } from "@lib/interface";
 
@@ -19,22 +21,22 @@ export default function SignupForm(): ReactNode
   const [inputs, setInputs] = useState<SignupInputsInterface>(signupInputsObj);
   const [alert, setAlert] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
+  const { user, loading } = useAuth();
 
-  // On Mount
-  useEffect(() =>
+  // // Show Loading
+  if (loading)
   {
-    checkSession();
-  }, []);
+    return (
+      <>
+        <Loading />
+      </>
+    );
+  }
 
-  // Check Session
-  async function checkSession(): Promise<void>
+  // Redirect
+  if (user)
   {
-    const { data: { session } } = await auth.getSession();
-
-    if (session)
-    {
-      redirect("/dashboard");
-    }
+    redirect("/dashboard");
   }
 
   // Handle Change

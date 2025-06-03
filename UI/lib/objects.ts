@@ -1,6 +1,6 @@
 import type { User, Vehicle } from "@prisma/client";
 //
-import type { ResponseInterface, SignupInputsInterface } from "@lib/interface";
+import type { ResponseInterface, SignupInputsInterface, AuthContextInterface } from "@lib/interface";
 
 // User Object
 const userObj: User =
@@ -37,4 +37,11 @@ const signupInputsObj: SignupInputsInterface =
   repassword: ""
 };
 
-export { userObj, vehicleObj, responseObj, signupInputsObj };
+// Auth Context Object
+const authContextObj: AuthContextInterface =
+{
+  user: null,
+  loading: true
+};
+
+export { userObj, vehicleObj, responseObj, signupInputsObj, authContextObj };

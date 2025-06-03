@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { Make, Colour } from "@prisma/client";
+import type { Make, Colour, User } from "@prisma/client";
 
 // Props
 interface Props
@@ -30,4 +30,11 @@ interface MakesAndColoursInterface
   colours: Colour[];
 }
 
-export type { Props, ResponseInterface, SignupInputsInterface, MakesAndColoursInterface };
+// Auth Context Type
+interface AuthContextInterface
+{
+  user: User | null;
+  loading: boolean;
+}
+
+export type { Props, ResponseInterface, SignupInputsInterface, MakesAndColoursInterface, AuthContextInterface };

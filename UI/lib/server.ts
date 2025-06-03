@@ -1,4 +1,5 @@
-import type { Make, Colour, Detection } from "@prisma/client";
+import { supabase } from "@lib/supabase";
+import type { Make, Colour, User, Detection } from "@prisma/client";
 //
 import prisma from "@lib/prisma";
 import type { MakesAndColoursInterface } from "@lib/interface";
@@ -47,4 +48,19 @@ async function fetchMakeAndColour(): Promise<MakesAndColoursInterface>
   return { makes, colours };
 }
 
-export { fetchDetections, fetchMakeAndColour };
+// Fetch User
+async function fetchUser(email: string): Promise<User | null>
+{
+  let user: User | null = null;
+
+  const data = await supabase.from("User").select("id, name, email").eq("email", email);
+
+  if (data.data && data.data.length != 0)
+  {
+    user = { id: data.data[0].id, name: data.data[0].name, email: data.data[0].email, password: "" };
+  }
+
+  return user;
+}
+
+export { fetchDetections, fetchMakeAndColour, fetchUser };
