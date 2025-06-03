@@ -1,6 +1,7 @@
 "use client";
-import { useState, type ReactNode, type ChangeEvent, type FormEvent } from "react";
+import { useState, useEffect, type ReactNode, type ChangeEvent, type FormEvent } from "react";
 import { redirect } from "next/navigation";
+import { auth } from "@lib/supabase";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 //
@@ -18,6 +19,23 @@ export default function SignupForm(): ReactNode
   const [inputs, setInputs] = useState<SignupInputsInterface>(signupInputsObj);
   const [alert, setAlert] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
+
+  // On Mount
+  useEffect(() =>
+  {
+    checkSession();
+  }, []);
+
+  // Check Session
+  async function checkSession(): Promise<void>
+  {
+    const { data: { session } } = await auth.getSession();
+
+    if (session)
+    {
+      redirect("/dashboard");
+    }
+  }
 
   // Handle Change
   function handleChange(e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>): void
@@ -48,6 +66,8 @@ export default function SignupForm(): ReactNode
 
       if (res.success)
       {
+        await auth.signUp({ email: inputs.email, password: inputs.password });
+
         setAlert(false);
         setMessage(res.message);
 
@@ -79,19 +99,21 @@ export default function SignupForm(): ReactNode
       setAlert(true);
       setMessage("Passwords Do Not Match!");
     }
-
-    for (let i: number = 0; i < list.length; i++)
+    else
     {
-      const res: ResponseInterface = validate(list[i], inputs[list[i]]);
-
-      if (!res.success)
+      for (let i: number = 0; i < list.length; i++)
       {
-        valid = false;
+        const res: ResponseInterface = validate(list[i], inputs[list[i]]);
 
-        setAlert(true);
-        setMessage(res.message);
+        if (!res.success)
+        {
+          valid = false;
 
-        break;
+          setAlert(true);
+          setMessage(res.message);
+
+          break;
+        }
       }
     }
 
