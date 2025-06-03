@@ -23,12 +23,12 @@ export default function SignupForm(): ReactNode
   const [message, setMessage] = useState<string>("");
   const { user, loading } = useAuth();
 
-  // // Show Loading
+  // Show Loading
   if (loading)
   {
     return (
       <>
-        <Loading />
+        <Loading header={ true } />
       </>
     );
   }

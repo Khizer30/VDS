@@ -22,7 +22,7 @@ export default async function Page(): Promise<ReactNode>
         <td className=" w-40 p-3 font-secondary text-sm border border-quaternary"> { x.make } </td>
         <td className=" w-40 p-3 font-secondary text-sm border border-quaternary"> { x.colour } </td>
         <td className=" w-40 p-3 font-secondary text-sm border border-quaternary"> { x.numberPlate } </td>
-        <td className=" w-40 p-3 font-secondary text-sm border border-quaternary"> { x.timestamp.toLocaleString() } </td>
+        <td className=" w-40 p-3 font-secondary text-sm border border-quaternary"> { x.timestamp.toUTCString() } </td>
       </tr>
     );
   }

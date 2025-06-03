@@ -5,8 +5,10 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import type { User } from "@prisma/client";
 //
+import Loading from "@components/Loading";
 import animationData from "@images/lottie/login.json";
 import validate from "@lib/validate";
+import { useAuth } from "@components/AuthContext";
 import { auth } from "@lib/supabase";
 import { userObj } from "@lib/objects";
 import type { ResponseInterface } from "@lib/interface";
@@ -20,6 +22,23 @@ export default function LoginForm(): ReactNode
   const [inputs, setInputs] = useState<User>(userObj);
   const [alert, setAlert] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
+  const { user, loading } = useAuth();
+
+  // Show Loading
+  if (loading)
+  {
+    return (
+      <>
+        <Loading header={ true } />
+      </>
+    );
+  }
+
+  // Redirect
+  if (user)
+  {
+    redirect("/dashboard");
+  }
 
   // Handle Change
   function handleChange(e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>): void
