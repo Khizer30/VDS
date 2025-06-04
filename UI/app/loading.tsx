@@ -13,7 +13,7 @@ export default function Page(): ReactNode
 {
   return (
     <>
-      <Loading header={ false } />
+      <Loading wScreen={ true } hScreen={ true } />
     </>
   );
 }

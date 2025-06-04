@@ -29,7 +29,7 @@ export default function LoginForm(): ReactNode
   {
     return (
       <>
-        <Loading header={ true } />
+        <Loading wScreen={ true } hScreen={ false } />
       </>
     );
   }

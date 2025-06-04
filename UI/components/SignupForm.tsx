@@ -28,7 +28,7 @@ export default function SignupForm(): ReactNode
   {
     return (
       <>
-        <Loading header={ true } />
+        <Loading wScreen={ true } hScreen={ false } />
       </>
     );
   }
