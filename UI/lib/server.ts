@@ -4,7 +4,7 @@ import type { Make, Colour, User, Detection } from "@prisma/client";
 import prisma from "@lib/prisma";
 import type { MakesAndColoursInterface } from "@lib/interface";
 
-// Fetch Detections
+// Server Fetch Detections
 async function fetchDetections(userID: number): Promise<Detection[]>
 {
   let detections: Detection[] = [];
@@ -25,7 +25,7 @@ async function fetchDetections(userID: number): Promise<Detection[]>
   return detections;
 }
 
-// Fetch Make & Colour
+// Server Fetch Make & Colour
 async function fetchMakeAndColour(): Promise<MakesAndColoursInterface>
 {
   let makes: Make[] = [];
@@ -48,7 +48,7 @@ async function fetchMakeAndColour(): Promise<MakesAndColoursInterface>
   return { makes, colours };
 }
 
-// Fetch User
+// Client Fetch User
 async function fetchUser(email: string): Promise<User | null>
 {
   let user: User | null = null;
@@ -63,4 +63,33 @@ async function fetchUser(email: string): Promise<User | null>
   return user;
 }
 
-export { fetchDetections, fetchMakeAndColour, fetchUser };
+// Client Fetch Recent Detection
+async function fetchRecentDetection(userID: number): Promise<Detection | null>
+{
+  let detection: Detection | null = null;
+
+  const data = await supabase
+    .from("Detection")
+    .select("*, vehicle:Vehicle!inner(*)")
+    .eq("vehicle.userID", userID)
+    .order("timestamp", { ascending: false })
+    .limit(1);
+
+
+  if (data.data && data.data.length != 0)
+  {
+    detection =
+    {
+      id: data.data[0].id,
+      make: data.data[0].make,
+      colour: data.data[0].colour,
+      timestamp: data.data[0].timestamp,
+      numberPlate: data.data[0].numberPlate,
+      vehicleID: data.data[0].vehicleID
+    };
+  }
+
+  return detection;
+}
+
+export { fetchDetections, fetchMakeAndColour, fetchUser, fetchRecentDetection };

@@ -36,6 +36,14 @@ export const AuthProvider = ({ children }: Props) =>
           setUser(user);
           setLoading(false);
         }
+        else
+        {
+          setLoading(false);
+        }
+      }
+      else
+      {
+        setLoading(false);
       }
     });
 
@@ -56,6 +64,14 @@ export const AuthProvider = ({ children }: Props) =>
         setUser(user);
         setLoading(false);
       }
+      else
+      {
+        setLoading(false);
+      }
+    }
+    else
+    {
+      setLoading(false);
     }
   }
 

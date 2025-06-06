@@ -1,4 +1,4 @@
-import type { User, Vehicle } from "@prisma/client";
+import type { User, Vehicle, Detection } from "@prisma/client";
 //
 import type { ResponseInterface, SignupInputsInterface, AuthContextInterface } from "@lib/interface";
 
@@ -19,6 +19,17 @@ const vehicleObj: Vehicle =
   colourID: 0,
   userID: 0,
   numberPlate: ""
+};
+
+// Detection Object
+const detectionObj: Detection =
+{
+  id: 0,
+  make: "",
+  colour: "",
+  numberPlate: "",
+  timestamp: new Date(),
+  vehicleID: 0
 };
 
 // Response Object
@@ -44,4 +55,4 @@ const authContextObj: AuthContextInterface =
   loading: true
 };
 
-export { userObj, vehicleObj, responseObj, signupInputsObj, authContextObj };
+export { userObj, vehicleObj, detectionObj, responseObj, signupInputsObj, authContextObj };
