@@ -4,12 +4,15 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import type { ReactNode } from "react";
 //
+import { useAuth } from "@components/AuthContext";
 import { auth } from "@lib/supabase";
 import logo from "@images/logo.webp";
 
 // Navbar
 export default function Navbar(): ReactNode
 {
+  const { user } = useAuth();
+
   // Logout
   async function logout(): Promise<void>
   {
@@ -35,7 +38,7 @@ export default function Navbar(): ReactNode
         </div>
         <nav className=" my-10">
 
-          <Link href="/dashboard" className=" w-full my-1 px-2 py-2 block font-secondary text-start text-sm menu">
+          <Link href={ `/dashboard/${ user?.id }` } className=" w-full my-1 px-2 py-2 block font-secondary text-start text-sm menu">
             Dashboard
           </Link>
 

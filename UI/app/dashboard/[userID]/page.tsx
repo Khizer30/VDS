@@ -8,9 +8,17 @@ export const metadata: Metadata =
   title: "Dashboard | Vehicle Detection System"
 };
 
-// Dashboard Page
-export default function Page(): ReactNode
+// Props
+interface Props
 {
+  params: Promise<{ userID: string; }>;
+}
+
+// Dashboard Page
+export default async function Page({ params }: Props): Promise<ReactNode>
+{
+  const { userID } = await params;
+
   return (
     <>
       <Dashboard />
