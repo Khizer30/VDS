@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { Make, Colour, User } from "@prisma/client";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 // Props
 interface Props
@@ -33,7 +34,7 @@ interface MakesAndColoursInterface
 // Auth Context Type
 interface AuthContextInterface
 {
-  user: User | null;
+  user: SupabaseUser | null;
   loading: boolean;
 }
 

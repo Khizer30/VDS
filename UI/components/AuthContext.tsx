@@ -1,11 +1,9 @@
 "use client";
 import { useState, useEffect, useContext, createContext, type Context } from "react";
-import { User } from "@prisma/client";
-import type { AuthChangeEvent, Session } from "@supabase/supabase-js";
+import type { AuthChangeEvent, Session, User } from "@supabase/supabase-js";
 //
 import { auth } from "@lib/supabase";
 import { authContextObj } from "@lib/objects";
-import { fetchUser } from "@lib/server";
 import type { Props, AuthContextInterface } from "@lib/interface";
 
 const AuthContext: Context<AuthContextInterface> = createContext<AuthContextInterface>(authContextObj);
@@ -27,22 +25,14 @@ export const AuthProvider = ({ children }: Props) =>
     // On Auth State Change
     const { data } = auth.onAuthStateChange(async (e: AuthChangeEvent, session: Session | null) =>
     {
-      if (session && session.user && session.user.email)
+      if (session && session.user)
       {
-        let user: User | null = await fetchUser(session.user.email);
-
-        if (user)
-        {
-          setUser(user);
-          setLoading(false);
-        }
-        else
-        {
-          setLoading(false);
-        }
+        setUser(session.user);
+        setLoading(false);
       }
       else
       {
+        setUser(null);
         setLoading(false);
       }
     });
@@ -55,22 +45,14 @@ export const AuthProvider = ({ children }: Props) =>
   {
     const { data } = await auth.getUser();
 
-    if (data.user && data.user.email)
+    if (data.user)
     {
-      let user: User | null = await fetchUser(data.user.email);
-
-      if (user)
-      {
-        setUser(user);
-        setLoading(false);
-      }
-      else
-      {
-        setLoading(false);
-      }
+      setUser(data.user);
+      setLoading(false);
     }
     else
     {
+      setUser(null);
       setLoading(false);
     }
   }

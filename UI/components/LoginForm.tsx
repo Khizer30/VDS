@@ -10,7 +10,6 @@ import animationData from "@images/lottie/login.json";
 import validate from "@lib/validate";
 import { useAuth } from "@components/AuthContext";
 import { auth } from "@lib/supabase";
-import { fetchUser } from "@lib/server";
 import { userObj } from "@lib/objects";
 import type { ResponseInterface } from "@lib/interface";
 
@@ -38,7 +37,7 @@ export default function LoginForm(): ReactNode
   // Redirect
   if (user)
   {
-    redirect(`/dashboard/${ user.id }`);
+    redirect("/dashboard");
   }
 
   // Handle Change
@@ -63,21 +62,9 @@ export default function LoginForm(): ReactNode
   {
     const { data, error } = await auth.signInWithPassword({ email: inputs.email, password: inputs.password });
 
-    if (data.user && data.user.email && data.session)
+    if (data.user && data.session)
     {
-      const user: User | null = await fetchUser(data.user.email);
-
-      if (user)
-      {
-        redirect(`/dashboard/${ user.id }`);
-      }
-      else
-      {
-        let message: string = "User Removed From Database";
-
-        setAlert(true);
-        setMessage(message);
-      }
+      redirect("/dashboard");
     }
     else if (error)
     {

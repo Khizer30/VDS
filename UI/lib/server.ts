@@ -63,30 +63,37 @@ async function fetchUser(email: string): Promise<User | null>
   return user;
 }
 
-// Client Fetch Recent Detection
+// Server Fetch Recent Detection
 async function fetchRecentDetection(userID: number): Promise<Detection | null>
 {
   let detection: Detection | null = null;
 
-  const data = await supabase
-    .from("Detection")
-    .select("*, vehicle:Vehicle!inner(*)")
-    .eq("vehicle.userID", userID)
-    .order("timestamp", { ascending: false })
-    .limit(1);
-
-
-  if (data.data && data.data.length != 0)
+  try
   {
-    detection =
-    {
-      id: data.data[0].id,
-      make: data.data[0].make,
-      colour: data.data[0].colour,
-      timestamp: data.data[0].timestamp,
-      numberPlate: data.data[0].numberPlate,
-      vehicleID: data.data[0].vehicleID
-    };
+    detection = await prisma.detection.findFirst({
+      where:
+      {
+        vehicle:
+        {
+          user:
+          {
+            id: userID
+          }
+        }
+      },
+      orderBy:
+      {
+        timestamp: "desc"
+      }
+    });
+  }
+  catch (error: unknown)
+  {
+    console.error(error);
+  }
+  finally
+  {
+    await prisma.$disconnect();
   }
 
   return detection;
