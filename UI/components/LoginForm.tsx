@@ -19,10 +19,10 @@ const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 // Login From
 export default function LoginForm(): ReactNode
 {
+  const { user, loading } = useAuth();
   const [inputs, setInputs] = useState<User>(userObj);
   const [alert, setAlert] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
-  const { user, loading } = useAuth();
 
   // Show Loading
   if (loading)

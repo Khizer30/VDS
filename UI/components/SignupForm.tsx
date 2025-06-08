@@ -18,10 +18,10 @@ const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 // Signup
 export default function SignupForm(): ReactNode
 {
+  const { user, loading } = useAuth();
   const [inputs, setInputs] = useState<SignupInputsInterface>(signupInputsObj);
   const [alert, setAlert] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
-  const { user, loading } = useAuth();
 
   // Show Loading
   if (loading)
