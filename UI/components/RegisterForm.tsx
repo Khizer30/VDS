@@ -1,25 +1,39 @@
 "use client";
-import { useState, type ReactNode, type ChangeEvent, type FormEvent } from "react";
+import { useState, useEffect, type ReactNode, type ChangeEvent, type FormEvent } from "react";
 import { redirect } from "next/navigation";
 import type { Make, Colour, Vehicle } from "@prisma/client";
 //
 import Loading from "@components/Loading";
 import validate from "@lib/validate";
 import { useAuth } from "@components/AuthContext";
+import { fetchMakeAndColour } from "@lib/server";
 import { vehicleObj } from "@lib/objects";
 import type { ResponseInterface } from "@lib/interface";
 
-// Props
-interface Props
-{
-  makes: Make[];
-  colours: Colour[];
-}
-
 // Register Vehicle Form
-export default function RegisterForm({ makes, colours }: Props): ReactNode
+export default function RegisterForm(): ReactNode
 {
+  // Hooks
   const { user, loading } = useAuth();
+
+  // On Mount
+  useEffect(() =>
+  {
+    (async () =>
+    {
+      if (user && user.email)
+      {
+        const { makes, colours } = await fetchMakeAndColour();
+
+        setMakes(makes);
+        setColours(colours);
+      }
+    })();
+  }, [user]);
+
+  // States
+  const [makes, setMakes] = useState<Make[]>([]);
+  const [colours, setColours] = useState<Colour[]>([]);
   const [inputs, setInputs] = useState<Vehicle>(vehicleObj);
   const [alert, setAlert] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");

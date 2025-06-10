@@ -1,7 +1,5 @@
 import { supabase } from "@lib/supabase";
 import type { Make, Colour, User, Detection } from "@prisma/client";
-//
-import prisma from "@lib/prisma";
 
 // Client Fetch Detections
 async function fetchDetections(email: string): Promise<Detection[]>
@@ -41,24 +39,24 @@ async function fetchDetections(email: string): Promise<Detection[]>
   return detections;
 }
 
-// Server Fetch Make & Colour
+// Client Fetch Make & Colour
 async function fetchMakeAndColour(): Promise<{ makes: Make[], colours: Colour[]; }>
 {
   let makes: Make[] = [];
   let colours: Colour[] = [];
 
-  try
+  let { data: makeData } = await supabase
+    .from("Make")
+    .select("*");
+
+  let { data: colourData } = await supabase
+    .from("Colour")
+    .select("*");
+
+  if (makeData && makeData.length !== 0 && colourData && colourData.length !== 0)
   {
-    makes = await prisma.make.findMany();
-    colours = await prisma.colour.findMany();
-  }
-  catch (error: unknown)
-  {
-    console.error(error);
-  }
-  finally
-  {
-    await prisma.$disconnect();
+    makes = makeData;
+    colours = colourData;
   }
 
   return { makes, colours };
