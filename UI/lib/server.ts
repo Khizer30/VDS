@@ -1,5 +1,5 @@
 import { supabase } from "@lib/supabase";
-import type { Make, Colour, User, Detection } from "@prisma/client";
+import type { Make, Colour, User, Detection, Vehicle } from "@prisma/client";
 
 // Client Fetch Detections
 async function fetchDetections(email: string): Promise<Detection[]>
@@ -82,10 +82,11 @@ async function fetchUser(email: string): Promise<User | null>
 }
 
 // Client Fetch Recent Detection
-async function fetchRecentDetection(email: string): Promise<{ name: string, detection: Detection | null; }>
+async function fetchRecentDetection(email: string): Promise<{ name: string, detection: Detection | null, vehicles: Vehicle[]; }>
 {
   let name: string = "";
   let detection: Detection | null = null;
+  let vehicles: Vehicle[] = [];
 
   let { data: userData } = await supabase
     .from("User")
@@ -99,12 +100,13 @@ async function fetchRecentDetection(email: string): Promise<{ name: string, dete
 
     let { data: vehicleData } = await supabase
       .from("Vehicle")
-      .select("id")
+      .select("*")
       .eq("userID", userData.id);
 
     if (vehicleData && vehicleData.length !== 0)
     {
       let vehicleIDs: number[] = vehicleData.map(v => v.id);
+      vehicles = vehicleData;
 
       let { data: detectionData } = await supabase
         .from("Detection")
@@ -120,7 +122,7 @@ async function fetchRecentDetection(email: string): Promise<{ name: string, dete
     }
   }
 
-  return { name, detection };
+  return { name, detection, vehicles };
 }
 
 export { fetchDetections, fetchMakeAndColour, fetchUser, fetchRecentDetection };

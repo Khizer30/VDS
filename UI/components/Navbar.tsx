@@ -23,7 +23,7 @@ export default function Navbar(): ReactNode
 
   return (
     <>
-      <aside className=" w-1/6 p-6 border-r-2">
+      <aside className=" w-1/6 p-6 hidden md:block border-r-2">
         <div className=" my-4 flex justify-center items-center">
           <Image
             src={ logo }

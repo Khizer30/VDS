@@ -17,7 +17,7 @@ export default function Layout({ children }: Props): ReactNode
       <AuthProvider>
         <div className=" h-screen flex">
           <Navbar />
-          <main className=" w-5/6 p-6">
+          <main className=" w-full md:w-5/6 p-3 md:p-6">
             { children }
           </main>
         </div>
