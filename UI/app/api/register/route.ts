@@ -1,9 +1,18 @@
 import { NextResponse, type NextRequest } from "next/server";
 import prisma from "@lib/prisma";
-import type { Vehicle } from "@prisma/client";
+import type { User } from "@prisma/client";
 //
 import { responseObj } from "@lib/objects";
 import type { ResponseInterface } from "@lib/interface";
+
+// JSON
+interface JSON
+{
+  email: string;
+  makeID: string;
+  colourID: string;
+  numberPlate: string;
+}
 
 // Register POST API
 export async function POST(req: NextRequest): Promise<NextResponse>
@@ -12,20 +21,30 @@ export async function POST(req: NextRequest): Promise<NextResponse>
 
   try
   {
-    const { makeID, colourID, userID, numberPlate }: Vehicle = await req.json();
+    const { email, makeID, colourID, numberPlate }: JSON = await req.json();
 
-    await prisma.vehicle.create({
-      data:
-      {
-        makeID: +makeID,
-        colourID: +colourID,
-        userID: 1,
-        numberPlate: numberPlate,
-      }
-    });
+    const user: User | null = await prisma.user.findFirst({ where: { email: email } });
 
-    response.success = true;
-    response.message = "Vehicle Added Successfully!";
+    if (user)
+    {
+      await prisma.vehicle.create({
+        data:
+        {
+          makeID: +makeID,
+          colourID: +colourID,
+          numberPlate: numberPlate,
+          userID: user.id
+        }
+      });
+
+      response.success = true;
+      response.message = "Vehicle Added Successfully!";
+    }
+    else
+    {
+      response.success = false;
+      response.message = "This User Can't Create Vehicle!";
+    }
   }
   catch (error: unknown)
   {

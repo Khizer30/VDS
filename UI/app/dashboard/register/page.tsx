@@ -1,9 +1,9 @@
-import { ReactNode } from "react";
-import { Metadata } from "next";
+import type { ReactNode } from "react";
+import type { Metadata } from "next";
+import type { Make, Colour } from "@prisma/client";
 //
 import RegisterForm from "@components/RegisterForm";
 import { fetchMakeAndColour } from "@lib/server";
-import type { MakesAndColoursInterface } from "@lib/interface";
 
 export const metadata: Metadata =
 {
@@ -13,7 +13,7 @@ export const metadata: Metadata =
 // Register Page
 export default async function Page(): Promise<ReactNode>
 {
-  const { makes, colours }: MakesAndColoursInterface = await fetchMakeAndColour();
+  const { makes, colours }: { makes: Make[], colours: Colour[]; } = await fetchMakeAndColour();
 
   return (
     <>

@@ -1,17 +1,44 @@
 "use client";
 import { useState, type ReactNode, type ChangeEvent, type FormEvent } from "react";
+import { redirect } from "next/navigation";
 import type { Make, Colour, Vehicle } from "@prisma/client";
 //
+import Loading from "@components/Loading";
 import validate from "@lib/validate";
+import { useAuth } from "@components/AuthContext";
 import { vehicleObj } from "@lib/objects";
-import type { ResponseInterface, MakesAndColoursInterface } from "@lib/interface";
+import type { ResponseInterface } from "@lib/interface";
+
+// Props
+interface Props
+{
+  makes: Make[];
+  colours: Colour[];
+}
 
 // Register Vehicle Form
-export default function RegisterForm({ makes, colours }: MakesAndColoursInterface): ReactNode
+export default function RegisterForm({ makes, colours }: Props): ReactNode
 {
+  const { user, loading } = useAuth();
   const [inputs, setInputs] = useState<Vehicle>(vehicleObj);
   const [alert, setAlert] = useState<boolean>(true);
   const [message, setMessage] = useState<string>("");
+
+  // Show Loading
+  if (loading)
+  {
+    return (
+      <>
+        <Loading wScreen={ true } hScreen={ false } />
+      </>
+    );
+  }
+
+  // Redirect
+  if (!user)
+  {
+    redirect("/login");
+  }
 
   // Handle Change
   function handleChange(e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>): void
@@ -24,7 +51,7 @@ export default function RegisterForm({ makes, colours }: MakesAndColoursInterfac
   {
     e.preventDefault();
 
-    if (validateInputs())
+    if (validateInputs() && user)
     {
       const response: Response = await fetch("/api/register",
         {
@@ -35,7 +62,7 @@ export default function RegisterForm({ makes, colours }: MakesAndColoursInterfac
           {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(inputs)
+          body: JSON.stringify({ email: user.email, makeID: inputs.makeID, colourID: inputs.colourID, numberPlate: inputs.numberPlate })
         });
 
       const res: ResponseInterface = await response.json();
