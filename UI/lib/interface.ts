@@ -24,13 +24,6 @@ interface SignupInputsInterface
   repassword: string;
 }
 
-// Makes & Colours Interface
-interface MakesAndColoursInterface
-{
-  makes: Make[];
-  colours: Colour[];
-}
-
 // Auth Context Type
 interface AuthContextInterface
 {
@@ -38,4 +31,4 @@ interface AuthContextInterface
   loading: boolean;
 }
 
-export type { Props, ResponseInterface, SignupInputsInterface, MakesAndColoursInterface, AuthContextInterface };
+export type { Props, ResponseInterface, SignupInputsInterface, AuthContextInterface };

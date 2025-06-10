@@ -2,31 +2,47 @@ import { supabase } from "@lib/supabase";
 import type { Make, Colour, User, Detection } from "@prisma/client";
 //
 import prisma from "@lib/prisma";
-import type { MakesAndColoursInterface } from "@lib/interface";
 
-// Server Fetch Detections
-async function fetchDetections(userID: number): Promise<Detection[]>
+// Client Fetch Detections
+async function fetchDetections(email: string): Promise<Detection[]>
 {
   let detections: Detection[] = [];
 
-  try
+  let { data: userData } = await supabase
+    .from("User")
+    .select("id")
+    .eq("email", email)
+    .single();
+
+  if (userData)
   {
-    detections = await prisma.detection.findMany({ where: { vehicle: { user: { id: userID } } }, orderBy: { timestamp: "desc" } });
-  }
-  catch (error: unknown)
-  {
-    console.error(error);
-  }
-  finally
-  {
-    await prisma.$disconnect();
+    let { data: vehicleData } = await supabase
+      .from("Vehicle")
+      .select("id")
+      .eq("userID", userData.id);
+
+    if (vehicleData && vehicleData.length !== 0)
+    {
+      let vehicleIDs: number[] = vehicleData.map(v => v.id);
+
+      let { data: detectionData } = await supabase
+        .from("Detection")
+        .select("*")
+        .in("vehicleID", vehicleIDs)
+        .order("timestamp", { ascending: false });
+
+      if (detectionData && detectionData.length !== 0)
+      {
+        detections = detectionData;
+      }
+    }
   }
 
   return detections;
 }
 
 // Server Fetch Make & Colour
-async function fetchMakeAndColour(): Promise<MakesAndColoursInterface>
+async function fetchMakeAndColour(): Promise<{ makes: Make[], colours: Colour[]; }>
 {
   let makes: Make[] = [];
   let colours: Colour[] = [];
@@ -53,11 +69,15 @@ async function fetchUser(email: string): Promise<User | null>
 {
   let user: User | null = null;
 
-  const data = await supabase.from("User").select("id, name, email").eq("email", email);
+  let { data } = await supabase
+    .from("User")
+    .select("id, name, email")
+    .eq("email", email)
+    .single();
 
-  if (data.data && data.data.length != 0)
+  if (data)
   {
-    user = { id: data.data[0].id, name: data.data[0].name, email: data.data[0].email, password: "" };
+    user = { id: data.id, name: data.email, email: data.email, password: "" };
   }
 
   return user;
