@@ -2,15 +2,13 @@
   "name": "vds-ui",
   "version": "1.0.0",
   "private": true,
-  "scripts":
-  {
+  "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start"
   },
-  "dependencies":
-  {
-    "@fontsource/roboto": "^5.2.6",
+  "dependencies": {
+    "@fontsource-variable/roboto": "^5.2.6",
     "@prisma/client": "^6.11.1",
     "@supabase/supabase-js": "^2.50.3",
     "next": "15.3.5",
@@ -20,12 +18,13 @@
     "react-hot-toast": "^2.5.2",
     "react-lottie-player": "^2.1.0"
   },
-  "devDependencies":
-  {
+  "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.13",
     "prisma": "^6.11.1",
     "tailwindcss": "^4",
     "typescript": "^5"

@@ -3,17 +3,15 @@ import type { Metadata } from "next";
 //
 import Loading from "@components/Loading";
 
-export const metadata: Metadata =
-{
-  title: "Loading... | Vehicle Detection System"
+export const metadata: Metadata = {
+  title: "Loading... | Vehicle Detection System",
 };
 
 // Loading Page
-export default function Page(): ReactNode
-{
+export default function Page(): ReactNode {
   return (
     <>
-      <Loading wScreen={ true } hScreen={ true } />
+      <Loading wScreen={true} hScreen={true} />
     </>
   );
 }

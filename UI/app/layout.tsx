@@ -1,11 +1,10 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import "@fontsource/roboto";
+import "@fontsource-variable/roboto";
 //
 import "./globals.css";
 
-export const metadata: Metadata =
-{
+export const metadata: Metadata = {
   title: "Vehicle Detection System",
   description: "A Simple Vehicle Detection System.",
   authors: [{ name: "Syed Muhammad Khizer" }],
@@ -13,19 +12,15 @@ export const metadata: Metadata =
 };
 
 // Props
-interface Props
-{
+interface Props {
   children: ReactNode;
 }
 
 // Layout
-export default function Layout({ children }: Props): ReactNode
-{
+export default function Layout({ children }: Props): ReactNode {
   return (
     <html lang="en">
-      <body>
-        { children }
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
