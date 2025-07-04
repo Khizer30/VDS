@@ -16,7 +16,6 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "types": [ "jest" ],
     "plugins":
     [
       {
@@ -25,10 +24,11 @@
     ],
     "paths":
     {
-      "@app/*": [ "./app/*" ],
       "@components/*": [ "./components/*" ],
-      "@lib/*": [ "./lib/*" ],
-      "@images/*": [ "./images/*" ]
+      "@helpers/*": [ "./helpers/*" ],
+      "@images/*": [ "./images/*" ],
+      "@models/*": [ "./models/*" ],
+      "@app/*": [ "./app/*" ]
     }
   },
   "include": [ "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts" ],

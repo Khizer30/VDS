@@ -1,58 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* Box Shadow */
-.boxShadow
+@theme
 {
-  border-width: 1px;
-  border-radius: 0.25rem;
-  border-color: #DBD3D3;
-  transition: all 0.25s ease;
-}
-
-.boxShadow:focus
-{
-  outline: 1px solid #000000;
-  box-shadow: 3px 3px #000000;
-}
-
-/* Button */
-.btn
-{
-  color: #FFFFFF;
-  background-color: #000000;
-  border-width: 1px;
-  border-radius: 0.25rem;
-  border-color: #000000;
-  transition: all 0.25s ease;
-}
-
-.btn:hover
-{
-  color: #000000;
-  background-color: #FFFFFF;
-}
-
-.btn:active
-{
-  scale: 0.95;
-}
-
-/* Menu */
-.menu
-{
-  border-radius: 0.25rem;
-  transition: all 0.25s ease;
-}
-
-.menu:hover
-{
-  color: #FFFFFF;
-  background-color: #000000;
-}
-
-.menu:active
-{
-  scale: 0.95;
+  --font-primary: "Roboto", "sans-serif";
 }
