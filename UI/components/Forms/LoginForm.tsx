@@ -9,7 +9,6 @@ import type { User } from "@app/generated/prisma";
 //
 import Loading from "@components/Loading";
 import animationData from "@images/lottie/login.json";
-// import validate from "@lib/validate";
 import type { ResponseInterface, LoginInterface } from "@models/types";
 
 // Import Lottie

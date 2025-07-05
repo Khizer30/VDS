@@ -16,12 +16,7 @@ export default function Loading({ wScreen, hScreen }: Props): ReactNode {
       <div
         className={` ${wScreen ? "w-screen" : "w-full"} ${hScreen ? "h-screen" : "h-full"} flex items-center justify-center`}
       >
-        <Image
-          src={logo}
-          alt="VDH Logo"
-          draggable={false}
-          className="w-96 animate-pulse"
-        />
+        <Image src={logo} alt="VDH Logo" draggable={false} className="w-80 animate-pulse md:w-96" />
       </div>
     </>
   );

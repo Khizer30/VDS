@@ -1,15 +1,15 @@
 "use client";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { useState, type ReactNode } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { redirect } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
-import type { ReactNode } from "react";
 import type { User } from "@app/generated/prisma";
 //
 import Loading from "@components/Loading";
+import Loader from "@components/Loader";
 import animationData from "@images/lottie/signup.json";
-// import validate from "@lib/validate";
 import type { ResponseInterface, SignupInterface } from "@models/types";
 
 // Import Lottie
@@ -18,6 +18,7 @@ const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 // Signup
 export default function SignupForm(): ReactNode {
   // States
+  const [loader, setLoader] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -64,6 +65,7 @@ export default function SignupForm(): ReactNode {
   // Signup
   async function signup(inputs: SignupInterface): Promise<void> {
     const url: string = "/api/signup";
+    setLoader(true);
 
     const response: Response = await fetch(url, {
       mode: "same-origin",
@@ -75,10 +77,11 @@ export default function SignupForm(): ReactNode {
     });
 
     let res: ResponseInterface = await response.json();
+    setLoader(false);
 
     if (res.success) {
       toast.success(res.message);
-      redirect("/login");
+      setTimeout(() => redirect("/login"), 1000);
     } else {
       toast.error(res.message);
       reset();
@@ -87,6 +90,7 @@ export default function SignupForm(): ReactNode {
 
   return (
     <>
+      {loader && <Loader />}
       <Toaster />
       <div className="col-span-1 mb-8 flex items-center justify-center">
         <form
