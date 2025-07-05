@@ -10,18 +10,10 @@ import type { User } from "@app/generated/prisma";
 import Loading from "@components/Loading";
 import animationData from "@images/lottie/signup.json";
 // import validate from "@lib/validate";
-import type { ResponseInterface } from "@models/types";
+import type { ResponseInterface, SignupInterface } from "@models/types";
 
 // Import Lottie
 const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
-
-// Signup Interface
-interface SignupInterface {
-  name: string;
-  email: string;
-  password: string;
-  repassword: string;
-}
 
 // Signup
 export default function SignupForm(): ReactNode {
@@ -29,16 +21,21 @@ export default function SignupForm(): ReactNode {
   const {
     register,
     handleSubmit,
-    formState: { errors, touchedFields },
+    reset,
+    formState: { errors, touchedFields }
   } = useForm<SignupInterface>({
     mode: "onTouched",
-    defaultValues: { name: "", email: "", password: "", repassword: "" },
+    defaultValues: { name: "", email: "", password: "", repassword: "" }
   });
 
   // On Submit
   const onSubmit: SubmitHandler<SignupInterface> = (data: SignupInterface) => {
     if (validateForm(data)) {
-      signup(data);
+      if (data.password === data.repassword) {
+        signup(data);
+      } else {
+        toast.error("Passwords do not match.");
+      }
     }
   };
 
@@ -65,7 +62,28 @@ export default function SignupForm(): ReactNode {
   }
 
   // Signup
-  async function signup(inputs: SignupInterface): Promise<void> {}
+  async function signup(inputs: SignupInterface): Promise<void> {
+    const url: string = "/api/signup";
+
+    const response: Response = await fetch(url, {
+      mode: "same-origin",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(inputs)
+    });
+
+    let res: ResponseInterface = await response.json();
+
+    if (res.success) {
+      toast.success(res.message);
+      redirect("/login");
+    } else {
+      toast.error(res.message);
+      reset();
+    }
+  }
 
   return (
     <>
@@ -90,12 +108,12 @@ export default function SignupForm(): ReactNode {
                 required: "* Name is required.",
                 maxLength: {
                   value: 100,
-                  message: "* Name must be less than 100 characters.",
+                  message: "* Name must be less than 100 characters."
                 },
                 pattern: {
                   value: /^[A-Z][a-z]+(?: [A-Z][a-z]+)*$/,
-                  message: "* Please enter a valid name.",
-                },
+                  message: "* Please enter a valid name."
+                }
               })}
             />
             <label
@@ -121,12 +139,12 @@ export default function SignupForm(): ReactNode {
                 required: "* Email is required.",
                 maxLength: {
                   value: 100,
-                  message: "* Email must be less than 100 characters.",
+                  message: "* Email must be less than 100 characters."
                 },
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
-                  message: "* Please enter a valid email address.",
-                },
+                  message: "* Please enter a valid email address."
+                }
               })}
             />
             <label
@@ -152,16 +170,16 @@ export default function SignupForm(): ReactNode {
                 required: "* Password is required.",
                 maxLength: {
                   value: 100,
-                  message: "* Password must be less than 100 characters.",
+                  message: "* Password must be less than 100 characters."
                 },
                 minLength: {
                   value: 8,
-                  message: "* Password must be at least 8 characters long",
+                  message: "* Password must be at least 8 characters long"
                 },
                 pattern: {
                   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/,
-                  message: "* Please enter a valid password.",
-                },
+                  message: "* Please enter a valid password."
+                }
               })}
             />
             <label
@@ -187,16 +205,16 @@ export default function SignupForm(): ReactNode {
                 required: "* Password is required.",
                 maxLength: {
                   value: 100,
-                  message: "* Password must be less than 100 characters.",
+                  message: "* Password must be less than 100 characters."
                 },
                 minLength: {
                   value: 8,
-                  message: "* Password must be at least 8 characters long",
+                  message: "* Password must be at least 8 characters long"
                 },
                 pattern: {
                   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/,
-                  message: "* Please enter a valid password.",
-                },
+                  message: "* Please enter a valid password."
+                }
               })}
             />
             <label

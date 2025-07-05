@@ -4,4 +4,18 @@ interface ResponseInterface {
   message: string;
 }
 
-export type { ResponseInterface };
+// Login Interface
+interface LoginInterface {
+  email: string;
+  password: string;
+}
+
+// Signup Interface
+interface SignupInterface {
+  name: string;
+  email: string;
+  password: string;
+  repassword: string;
+}
+
+export type { ResponseInterface, LoginInterface, SignupInterface };

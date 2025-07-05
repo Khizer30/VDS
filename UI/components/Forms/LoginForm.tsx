@@ -10,16 +10,10 @@ import type { User } from "@app/generated/prisma";
 import Loading from "@components/Loading";
 import animationData from "@images/lottie/login.json";
 // import validate from "@lib/validate";
-import type { ResponseInterface } from "@models/types";
+import type { ResponseInterface, LoginInterface } from "@models/types";
 
 // Import Lottie
 const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
-
-// Login Interface
-interface LoginInterface {
-  email: string;
-  password: string;
-}
 
 // Login From
 export default function LoginForm(): ReactNode {
@@ -27,10 +21,10 @@ export default function LoginForm(): ReactNode {
   const {
     register,
     handleSubmit,
-    formState: { errors, touchedFields },
+    formState: { errors, touchedFields }
   } = useForm<LoginInterface>({
     mode: "onTouched",
-    defaultValues: { email: "", password: "" },
+    defaultValues: { email: "", password: "" }
   });
 
   // On Submit
@@ -88,12 +82,12 @@ export default function LoginForm(): ReactNode {
                 required: "* Email is required.",
                 maxLength: {
                   value: 100,
-                  message: "* Email must be less than 100 characters.",
+                  message: "* Email must be less than 100 characters."
                 },
                 pattern: {
                   value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
-                  message: "* Please enter a valid email address.",
-                },
+                  message: "* Please enter a valid email address."
+                }
               })}
             />
             <label
@@ -119,16 +113,16 @@ export default function LoginForm(): ReactNode {
                 required: "* Password is required.",
                 maxLength: {
                   value: 100,
-                  message: "* Password must be less than 100 characters.",
+                  message: "* Password must be less than 100 characters."
                 },
                 minLength: {
                   value: 8,
-                  message: "* Password must be at least 8 characters long",
+                  message: "* Password must be at least 8 characters long"
                 },
                 pattern: {
                   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/,
-                  message: "* Please enter a valid password.",
-                },
+                  message: "* Please enter a valid password."
+                }
               })}
             />
             <label
