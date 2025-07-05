@@ -53,6 +53,11 @@ export default function SignupForm(): ReactNode {
     }
   };
 
+  // On Error
+  const onError = () => {
+    toast.error("Please enter valid details");
+  };
+
   // Validate Form
   function validateForm(data: SignupInterface): boolean {
     let flag: boolean = true;
@@ -107,7 +112,7 @@ export default function SignupForm(): ReactNode {
       {loader && <Loader />}
       <div className="col-span-1 mb-8 flex items-center justify-center">
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit, onError)}
           noValidate
           className="w-11/12 rounded-xl border border-gray-500 p-4 md:w-5/6 md:p-8"
         >

@@ -1,16 +1,17 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 //
-import { verifyToken } from "@helpers/jwt";
+import { setCookies, verifyToken } from "@helpers/jwt";
 import type { ResponseInterface, TokenInterface, UserInterface } from "@models/types";
 
 // Me API
 export async function GET(): Promise<NextResponse<ResponseInterface>> {
   const res: ResponseInterface = { success: false, message: "" };
-  const token: string | undefined = (await cookies()).get("accessToken")?.value;
+  const accessToken: string | undefined = (await cookies()).get("accessToken")?.value;
+  const refreshToken: string | undefined = (await cookies()).get("refreshToken")?.value;
 
-  if (token) {
-    const accessTokenPayload: TokenInterface | string = verifyToken(token, "ACCESS");
+  if (accessToken) {
+    const accessTokenPayload: TokenInterface | string = verifyToken(accessToken, "ACCESS");
 
     if (accessTokenPayload instanceof Object) {
       const user: UserInterface = {
@@ -20,13 +21,21 @@ export async function GET(): Promise<NextResponse<ResponseInterface>> {
 
       res.success = true;
       res.message = JSON.stringify(user);
-    } else {
-      res.success = false;
-      res.message = "Your session is invalid. Please log in again";
     }
-  } else {
-    res.success = false;
-    res.message = "You are not authorized. Please log in";
+  } else if (refreshToken) {
+    const refreshTokenPayload: TokenInterface | string = verifyToken(refreshToken, "REFRESH");
+
+    if (refreshTokenPayload instanceof Object) {
+      const user: UserInterface = {
+        userID: refreshTokenPayload.userID,
+        name: refreshTokenPayload.name
+      };
+
+      await setCookies(refreshTokenPayload.userID, refreshTokenPayload.name);
+
+      res.success = true;
+      res.message = JSON.stringify(user);
+    }
   }
 
   return NextResponse.json(res);

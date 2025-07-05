@@ -1,8 +1,7 @@
 import { PrismaClient, type User } from "@app/generated/prisma";
-import { cookies } from "next/headers";
 //
 import { hashPassword, comparePasswords } from "@helpers/encrypt";
-import { generateAccessToken, generateRefreshToken } from "@helpers/jwt";
+import { setCookies } from "@helpers/jwt";
 import { ResponseInterface, SignupInterface, LoginInterface } from "@models/types";
 
 // Signup
@@ -39,26 +38,7 @@ export async function login(data: LoginInterface): Promise<ResponseInterface> {
       const isValid: boolean = await comparePasswords(data.password, user.password);
 
       if (isValid) {
-        const accessToken: string = generateAccessToken(user.id.toString(), user.name);
-        const refreshToken: string = generateRefreshToken(user.id.toString(), user.name);
-
-        const secure: boolean = process.env.NODE_ENV === "production" ? true : false;
-
-        (await cookies()).set("accessToken", accessToken, {
-          httpOnly: true,
-          secure: secure,
-          sameSite: "strict",
-          path: "/",
-          maxAge: 60 * 15
-        });
-
-        (await cookies()).set("refreshToken", refreshToken, {
-          httpOnly: true,
-          secure: secure,
-          sameSite: "strict",
-          path: "/",
-          maxAge: 60 * 60 * 24 * 7
-        });
+        await setCookies(user.id.toString(), user.name);
 
         response.success = true;
         response.message = `Welcome ${user.name}`;
