@@ -4,6 +4,14 @@ interface ResponseInterface {
   message: string;
 }
 
+// Token Interface
+interface TokenInterface {
+  userID: string;
+  name: string;
+  iat: string;
+  exp: string;
+}
+
 // Login Interface
 interface LoginInterface {
   email: string;
@@ -18,4 +26,10 @@ interface SignupInterface {
   repassword: string;
 }
 
-export type { ResponseInterface, LoginInterface, SignupInterface };
+// User Interface
+interface UserInterface {
+  userID: string;
+  name: string;
+}
+
+export type { ResponseInterface, TokenInterface, LoginInterface, SignupInterface, UserInterface };
