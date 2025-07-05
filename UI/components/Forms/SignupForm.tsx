@@ -5,9 +5,7 @@ import { useState, type ReactNode } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { redirect } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
-import type { User } from "@app/generated/prisma";
 //
-import Loading from "@components/Loading";
 import Loader from "@components/Loader";
 import animationData from "@images/lottie/signup.json";
 import type { ResponseInterface, SignupInterface } from "@models/types";
@@ -35,7 +33,7 @@ export default function SignupForm(): ReactNode {
       if (data.password === data.repassword) {
         signup(data);
       } else {
-        toast.error("Passwords do not match.");
+        toast.error("Passwords do not match");
       }
     }
   };

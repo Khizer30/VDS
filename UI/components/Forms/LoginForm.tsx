@@ -1,13 +1,12 @@
 "use client";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { useState, type ReactNode } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { redirect } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
-import type { ReactNode } from "react";
-import type { User } from "@app/generated/prisma";
 //
-import Loading from "@components/Loading";
+import Loader from "@components/Loader";
 import animationData from "@images/lottie/login.json";
 import type { ResponseInterface, LoginInterface } from "@models/types";
 
@@ -17,6 +16,7 @@ const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 // Login From
 export default function LoginForm(): ReactNode {
   // States
+  const [loader, setLoader] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -56,10 +56,33 @@ export default function LoginForm(): ReactNode {
   }
 
   // Login
-  async function login(inputs: LoginInterface): Promise<void> {}
+  async function login(inputs: LoginInterface): Promise<void> {
+    const url: string = "/api/login";
+    setLoader(true);
+
+    const response: Response = await fetch(url, {
+      mode: "same-origin",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(inputs)
+    });
+
+    let res: ResponseInterface = await response.json();
+    setLoader(false);
+
+    if (res.success) {
+      toast.success(res.message);
+      setTimeout(() => redirect("/dashboard"), 1000);
+    } else {
+      toast.error(res.message);
+    }
+  }
 
   return (
     <>
+      {loader && <Loader />}
       <Toaster />
       <div className="col-span-1 mb-8 flex items-center justify-center">
         <form
