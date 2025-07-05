@@ -8,40 +8,42 @@ import type { ReactNode } from "react";
 import type { User } from "@app/generated/prisma";
 //
 import Loading from "@components/Loading";
-import animationData from "@images/lottie/login.json";
+import animationData from "@images/lottie/signup.json";
 // import validate from "@lib/validate";
 import type { ResponseInterface } from "@models/types";
 
 // Import Lottie
 const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 
-// Login Interface
-interface LoginInterface {
+// Signup Interface
+interface SignupInterface {
+  name: string;
   email: string;
   password: string;
+  repassword: string;
 }
 
-// Login From
-export default function LoginForm(): ReactNode {
+// Signup
+export default function SignupForm(): ReactNode {
   // States
   const {
     register,
     handleSubmit,
     formState: { errors, touchedFields },
-  } = useForm<LoginInterface>({
+  } = useForm<SignupInterface>({
     mode: "onTouched",
-    defaultValues: { email: "", password: "" },
+    defaultValues: { name: "", email: "", password: "", repassword: "" },
   });
 
   // On Submit
-  const onSubmit: SubmitHandler<LoginInterface> = (data: LoginInterface) => {
+  const onSubmit: SubmitHandler<SignupInterface> = (data: SignupInterface) => {
     if (validateForm(data)) {
-      login(data);
+      signup(data);
     }
   };
 
   // Validate Form
-  function validateForm(data: LoginInterface): boolean {
+  function validateForm(data: SignupInterface): boolean {
     let flag: boolean = true;
 
     Object.keys(data).forEach((key: string): void => {
@@ -62,8 +64,8 @@ export default function LoginForm(): ReactNode {
     }
   }
 
-  // Login
-  async function login(inputs: LoginInterface): Promise<void> {}
+  // Signup
+  async function signup(inputs: SignupInterface): Promise<void> {}
 
   return (
     <>
@@ -75,8 +77,39 @@ export default function LoginForm(): ReactNode {
           className="w-11/12 rounded-xl border border-gray-500 p-4 md:w-5/6 md:p-8"
         >
           <h3 className="font-primary my-2 text-lg font-light"> Welcome! </h3>
-          <h1 className="font-primary my-2 text-3xl font-bold"> Log in to </h1>
+          <h1 className="font-primary my-2 text-3xl font-bold"> Sign up to </h1>
           <h2 className="font-primary my-2"> Vehicle Detection System </h2>
+
+          <div className="relative my-4 w-full bg-inherit">
+            <input
+              type="text"
+              id="name"
+              placeholder=""
+              className={`peer h-10 w-full rounded-lg bg-transparent px-4 text-sm ring-1 focus:outline-none ${validate("name") ? "ring-gray-500 focus:border-black focus:ring-black" : "ring-red-500 focus:border-red-500 focus:ring-red-500"}`}
+              {...register("name", {
+                required: "* Name is required.",
+                maxLength: {
+                  value: 100,
+                  message: "* Name must be less than 100 characters.",
+                },
+                pattern: {
+                  value: /^[A-Z][a-z]+(?: [A-Z][a-z]+)*$/,
+                  message: "* Please enter a valid name.",
+                },
+              })}
+            />
+            <label
+              htmlFor="name"
+              className={`absolute -top-3 left-0 mx-1 cursor-text bg-white px-2 text-xs transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-sm ${validate("name") ? "text-gray-700 peer-placeholder-shown:text-gray-700 peer-focus:text-black" : "text-red-500 peer-placeholder-shown:text-red-500 peer-focus:text-red-500"}`}
+            >
+              Name
+            </label>
+            <p
+              className={`my-1 w-full px-2 text-xs text-red-500 ${validate("name") ? "invisible" : "visible"}`}
+            >
+              {(errors.name && errors.name.message) || <br />}
+            </p>
+          </div>
 
           <div className="relative my-4 w-full bg-inherit">
             <input
@@ -144,20 +177,55 @@ export default function LoginForm(): ReactNode {
             </p>
           </div>
 
+          <div className="relative my-4 w-full bg-inherit">
+            <input
+              type="password"
+              id="repassword"
+              placeholder=""
+              className={`peer h-10 w-full rounded-lg bg-transparent px-4 text-sm ring-1 focus:outline-none ${validate("repassword") ? "ring-gray-500 focus:border-black focus:ring-black" : "ring-red-500 focus:border-red-500 focus:ring-red-500"}`}
+              {...register("repassword", {
+                required: "* Password is required.",
+                maxLength: {
+                  value: 100,
+                  message: "* Password must be less than 100 characters.",
+                },
+                minLength: {
+                  value: 8,
+                  message: "* Password must be at least 8 characters long",
+                },
+                pattern: {
+                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/,
+                  message: "* Please enter a valid password.",
+                },
+              })}
+            />
+            <label
+              htmlFor="repassword"
+              className={`absolute -top-3 left-0 mx-1 cursor-text bg-white px-2 text-xs transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-sm ${validate("repassword") ? "text-gray-700 peer-placeholder-shown:text-gray-700 peer-focus:text-black" : "text-red-500 peer-placeholder-shown:text-red-500 peer-focus:text-red-500"}`}
+            >
+              Confirm Password
+            </label>
+            <p
+              className={`my-1 w-full px-2 text-xs text-red-500 ${validate("repassword") ? "invisible" : "visible"}`}
+            >
+              {(errors.repassword && errors.repassword.message) || <br />}
+            </p>
+          </div>
+
           <div className="my-2">
             <button
               type="submit"
               className="font-primary my-4 w-full cursor-pointer rounded-lg border border-black bg-black p-3 text-sm text-white transition-all hover:bg-white hover:text-black active:scale-95"
             >
-              Login
+              Signup
             </button>
           </div>
 
           <div className="mt-4 mb-2 flex items-center justify-center">
             <p className="font-primary text-xs">
-              Don’t have an account? &nbsp;
-              <Link href="/signup" className="font-bold">
-                Register
+              Already have an account? &nbsp;
+              <Link href="/login" className="font-bold">
+                Login
               </Link>
             </p>
           </div>
