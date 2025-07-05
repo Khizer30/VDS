@@ -11,7 +11,8 @@ interface Props {
 // Auth Context
 const AuthContext: Context<AuthContextInterface> = createContext<AuthContextInterface>({
   user: null,
-  loading: true
+  loading: true,
+  updateUser: async () => {}
 });
 
 // Auth Provider
@@ -22,27 +23,32 @@ export function AuthProvider({ children }: Props): ReactNode {
 
   // On Mount
   useEffect(() => {
-    (async () => {
-      const url: string = "/api/me";
-
-      const response: Response = await fetch(url, {
-        mode: "same-origin",
-        credentials: "same-origin",
-        method: "GET"
-      });
-
-      let res: ResponseInterface = await response.json();
-
-      if (res.success) {
-        const tempUser: UserInterface = JSON.parse(res.message) as UserInterface;
-        setUser(tempUser);
-      }
-
-      setLoading(false);
-    })();
+    updateUser(true);
   }, []);
 
-  return <AuthContext.Provider value={{ user, loading }}> {children} </AuthContext.Provider>;
+  // Update User
+  async function updateUser(initialRender: boolean): Promise<void> {
+    const url: string = "/api/me";
+
+    const response: Response = await fetch(url, {
+      mode: "same-origin",
+      credentials: "same-origin",
+      method: "GET"
+    });
+
+    let res: ResponseInterface = await response.json();
+
+    if (res.success) {
+      const tempUser: UserInterface = JSON.parse(res.message) as UserInterface;
+      setUser(tempUser);
+    }
+
+    if (initialRender) {
+      setLoading(false);
+    }
+  }
+
+  return <AuthContext.Provider value={{ user, loading, updateUser }}> {children} </AuthContext.Provider>;
 }
 
 // Use Auth Hook

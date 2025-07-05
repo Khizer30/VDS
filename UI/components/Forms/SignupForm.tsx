@@ -1,14 +1,15 @@
 "use client";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import toast from "react-hot-toast";
 import { useState, type ReactNode } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import { redirect, RedirectType } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import { type AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 //
+import Loading from "@components/Loading";
 import Loader from "@components/Loader";
 import animationData from "@images/lottie/signup.json";
+import { useAuth } from "@components/AuthContext";
 import type { ResponseInterface, SignupInterface } from "@models/types";
 
 // Import Lottie
@@ -17,7 +18,7 @@ const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 // Signup
 export default function SignupForm(): ReactNode {
   // Constructors
-  const router: AppRouterInstance = useRouter();
+  const { user, loading } = useAuth();
 
   // States
   const [loader, setLoader] = useState<boolean>(false);
@@ -30,6 +31,16 @@ export default function SignupForm(): ReactNode {
     mode: "onTouched",
     defaultValues: { name: "", email: "", password: "", repassword: "" }
   });
+
+  // Loading Screen
+  if (loading) {
+    return <Loading wScreen={true} hScreen={false} />;
+  }
+
+  // Redirect
+  if (user) {
+    redirect("/dashboard", RedirectType.replace);
+  }
 
   // On Submit
   const onSubmit: SubmitHandler<SignupInterface> = (data: SignupInterface) => {
@@ -79,21 +90,21 @@ export default function SignupForm(): ReactNode {
     });
 
     let res: ResponseInterface = await response.json();
-    setLoader(false);
 
     if (res.success) {
       toast.success(res.message);
-      setTimeout(() => router.push("/login"), 1000);
+      redirect("/login", RedirectType.push);
     } else {
       toast.error(res.message);
       reset();
     }
+
+    setLoader(false);
   }
 
   return (
     <>
       {loader && <Loader />}
-      <Toaster />
       <div className="col-span-1 mb-8 flex items-center justify-center">
         <form
           onSubmit={handleSubmit(onSubmit)}

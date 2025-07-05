@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast";
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import "@fontsource-variable/roboto";
@@ -22,7 +23,10 @@ export default function Layout({ children }: Props): ReactNode {
   return (
     <html lang="en">
       <body>
-        <AuthProvider> {children} </AuthProvider>
+        <AuthProvider>
+          <Toaster />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

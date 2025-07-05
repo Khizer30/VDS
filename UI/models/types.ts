@@ -36,6 +36,7 @@ interface UserInterface {
 interface AuthContextInterface {
   user: UserInterface | null;
   loading: boolean;
+  updateUser: (initialRender: boolean) => Promise<void>;
 }
 
 export type { ResponseInterface, TokenInterface, LoginInterface, SignupInterface, UserInterface, AuthContextInterface };
