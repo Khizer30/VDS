@@ -22,11 +22,11 @@ export async function GET(): Promise<NextResponse<ResponseInterface>> {
       res.message = JSON.stringify(user);
     } else {
       res.success = false;
-      res.message = "Invalid Token";
+      res.message = "Your session is invalid. Please log in again";
     }
   } else {
     res.success = false;
-    res.message = "Unauthenticated";
+    res.message = "You are not authorized. Please log in";
   }
 
   return NextResponse.json(res);

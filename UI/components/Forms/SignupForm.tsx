@@ -3,8 +3,9 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useState, type ReactNode } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { redirect } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { type AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 //
 import Loader from "@components/Loader";
 import animationData from "@images/lottie/signup.json";
@@ -15,6 +16,9 @@ const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 
 // Signup
 export default function SignupForm(): ReactNode {
+  // Constructors
+  const router: AppRouterInstance = useRouter();
+
   // States
   const [loader, setLoader] = useState<boolean>(false);
   const {
@@ -79,7 +83,7 @@ export default function SignupForm(): ReactNode {
 
     if (res.success) {
       toast.success(res.message);
-      setTimeout(() => redirect("/login"), 1000);
+      setTimeout(() => router.push("/login"), 1000);
     } else {
       toast.error(res.message);
       reset();
@@ -124,9 +128,7 @@ export default function SignupForm(): ReactNode {
             >
               Name
             </label>
-            <p
-              className={`my-1 w-full px-2 text-xs text-red-500 ${validate("name") ? "invisible" : "visible"}`}
-            >
+            <p className={`my-1 w-full px-2 text-xs text-red-500 ${validate("name") ? "invisible" : "visible"}`}>
               {(errors.name && errors.name.message) || <br />}
             </p>
           </div>
@@ -155,9 +157,7 @@ export default function SignupForm(): ReactNode {
             >
               Email
             </label>
-            <p
-              className={`my-1 w-full px-2 text-xs text-red-500 ${validate("email") ? "invisible" : "visible"}`}
-            >
+            <p className={`my-1 w-full px-2 text-xs text-red-500 ${validate("email") ? "invisible" : "visible"}`}>
               {(errors.email && errors.email.message) || <br />}
             </p>
           </div>
@@ -190,9 +190,7 @@ export default function SignupForm(): ReactNode {
             >
               Password
             </label>
-            <p
-              className={`my-1 w-full px-2 text-xs text-red-500 ${validate("password") ? "invisible" : "visible"}`}
-            >
+            <p className={`my-1 w-full px-2 text-xs text-red-500 ${validate("password") ? "invisible" : "visible"}`}>
               {(errors.password && errors.password.message) || <br />}
             </p>
           </div>
@@ -225,9 +223,7 @@ export default function SignupForm(): ReactNode {
             >
               Confirm Password
             </label>
-            <p
-              className={`my-1 w-full px-2 text-xs text-red-500 ${validate("repassword") ? "invisible" : "visible"}`}
-            >
+            <p className={`my-1 w-full px-2 text-xs text-red-500 ${validate("repassword") ? "invisible" : "visible"}`}>
               {(errors.repassword && errors.repassword.message) || <br />}
             </p>
           </div>

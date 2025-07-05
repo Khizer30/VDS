@@ -32,4 +32,10 @@ interface UserInterface {
   name: string;
 }
 
-export type { ResponseInterface, TokenInterface, LoginInterface, SignupInterface, UserInterface };
+// Auth Context Interface
+interface AuthContextInterface {
+  user: UserInterface | null;
+  loading: boolean;
+}
+
+export type { ResponseInterface, TokenInterface, LoginInterface, SignupInterface, UserInterface, AuthContextInterface };
