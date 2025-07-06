@@ -1,3 +1,5 @@
+import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+
 // Response Interface
 interface ResponseInterface {
   success: boolean;
@@ -39,4 +41,19 @@ interface AuthContextInterface {
   updateUser: (initialRender: boolean) => Promise<void>;
 }
 
-export type { ResponseInterface, TokenInterface, LoginInterface, SignupInterface, UserInterface, AuthContextInterface };
+// Link Interface
+interface LinkInterface {
+  name: string;
+  icon: IconDefinition;
+  url: string;
+}
+
+export type {
+  ResponseInterface,
+  TokenInterface,
+  LoginInterface,
+  SignupInterface,
+  UserInterface,
+  AuthContextInterface,
+  LinkInterface
+};
