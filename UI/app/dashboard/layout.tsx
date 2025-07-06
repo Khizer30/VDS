@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useState, type ReactNode } from "react";
 import { redirect, RedirectType } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,7 +12,6 @@ import {
   faTrash,
   faBars
 } from "@fortawesome/free-solid-svg-icons";
-import type { ReactNode } from "react";
 //
 import Loading from "@components/Loading";
 import { useAuth } from "@components/AuthContext";
@@ -23,9 +23,42 @@ interface Props {
   children: ReactNode;
 }
 
+// Links
+const links: LinkInterface[] = [
+  {
+    name: "Dashboard",
+    icon: faTachometerAlt,
+    url: "/dashboard"
+  },
+  {
+    name: "View Detections",
+    icon: faTable,
+    url: "/dashboard/view"
+  },
+  {
+    name: "Register Vehicle",
+    icon: faCar,
+    url: "/dashboard/register"
+  },
+  {
+    name: "Remove Vehicle",
+    icon: faTrash,
+    url: "/dashboard/remove"
+  }
+];
+
 // Layout
 export default function Layout({ children }: Props): ReactNode {
+  // Constructors
   const { user, loading } = useAuth();
+
+  // States
+  const [isSidebarOpen, setSidebarOpen] = useState<boolean>(true);
+
+  // Toggle Sidebar
+  function toggleSidebar(): void {
+    setSidebarOpen(!isSidebarOpen);
+  }
 
   // Loading Screen
   if (loading) {
@@ -36,30 +69,6 @@ export default function Layout({ children }: Props): ReactNode {
   if (!user) {
     redirect("/login", RedirectType.replace);
   }
-
-  // Links
-  const links: LinkInterface[] = [
-    {
-      name: "Dashboard",
-      icon: faTachometerAlt,
-      url: "/dashboard"
-    },
-    {
-      name: "View Detections",
-      icon: faTable,
-      url: "/dashboard/view"
-    },
-    {
-      name: "Register Vehicle",
-      icon: faCar,
-      url: "/dashboard/register"
-    },
-    {
-      name: "Remove Vehicle",
-      icon: faTrash,
-      url: "/dashboard/remove"
-    }
-  ];
 
   // Link Mapper
   function linkMapper(x: LinkInterface): ReactNode {
@@ -77,7 +86,9 @@ export default function Layout({ children }: Props): ReactNode {
 
   return (
     <>
-      <aside className="fixed top-0 z-10 ml-[-100%] flex h-screen w-full flex-col justify-between px-4 py-2 transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%]">
+      <aside
+        className={`fixed top-0 z-10 flex h-screen w-full flex-col justify-between px-4 pb-2 transition duration-300 ${isSidebarOpen ? "pt-[16.667%] md:w-4/12 md:pt-2 lg:w-[25%] xl:w-[20%]" : "ml-[-100%] w-0"}`}
+      >
         <div className="flex h-full w-full flex-col items-center justify-between rounded-lg bg-gray-900 p-6">
           <div className="flex h-full w-full flex-col items-center justify-start">
             <Image src={icon} alt="VDH Logo" priority draggable={false} className="w-20" />
@@ -93,13 +104,16 @@ export default function Layout({ children }: Props): ReactNode {
           </div>
         </div>
       </aside>
-      <div className="ml-auto px-4 py-2 lg:w-[75%] xl:w-[80%]">
+      <div className={`ml-auto px-4 py-2 ${isSidebarOpen ? "md:w-2/3 lg:w-[75%] xl:w-[80%]" : "w-full"}`}>
         <div className="sticky top-0 z-10 h-2/12 rounded-lg bg-gray-900 py-2">
           <div className="flex items-center justify-between space-x-4 px-4">
-            <button className="cursor-pointer rounded-full px-3 py-2 text-white transition-all hover:bg-gray-700 active:bg-white active:text-gray-900">
+            <h1 className="font-primary px-3 text-sm text-white"> Salam, {user.name} </h1>
+            <button
+              onClick={toggleSidebar}
+              className="cursor-pointer rounded-full px-3 py-2 text-white transition-all hover:bg-gray-700 active:bg-white active:text-gray-900"
+            >
               <FontAwesomeIcon icon={faBars} />
             </button>
-            <h1 className="font-primary px-3 text-sm text-white"> {user.name} </h1>
           </div>
         </div>
         <div> {children} </div>
