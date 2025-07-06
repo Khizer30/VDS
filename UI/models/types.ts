@@ -38,7 +38,8 @@ interface UserInterface {
 interface AuthContextInterface {
   user: UserInterface | null;
   loading: boolean;
-  updateUser: (initialRender: boolean) => Promise<void>;
+  login: (data: LoginInterface) => Promise<ResponseInterface>;
+  logout: () => Promise<ResponseInterface>;
 }
 
 // Link Interface

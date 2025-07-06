@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState, type ReactNode, type Context } from "react";
 //
-import type { ResponseInterface, UserInterface, AuthContextInterface } from "@models/types";
+import type { ResponseInterface, LoginInterface, UserInterface, AuthContextInterface } from "@models/types";
 
 // Props
 interface Props {
@@ -12,7 +12,12 @@ interface Props {
 const AuthContext: Context<AuthContextInterface> = createContext<AuthContextInterface>({
   user: null,
   loading: true,
-  updateUser: async () => {}
+  login: async () => {
+    throw new Error();
+  },
+  logout: async () => {
+    throw new Error();
+  }
 });
 
 // Auth Provider
@@ -23,11 +28,11 @@ export function AuthProvider({ children }: Props): ReactNode {
 
   // On Mount
   useEffect(() => {
-    updateUser(true);
+    updateUser();
   }, []);
 
   // Update User
-  async function updateUser(initialRender: boolean): Promise<void> {
+  async function updateUser(): Promise<void> {
     const url: string = "/api/me";
 
     const response: Response = await fetch(url, {
@@ -36,19 +41,59 @@ export function AuthProvider({ children }: Props): ReactNode {
       method: "GET"
     });
 
-    let res: ResponseInterface = await response.json();
+    const res: ResponseInterface = await response.json();
 
     if (res.success) {
       const tempUser: UserInterface = JSON.parse(res.message) as UserInterface;
       setUser(tempUser);
     }
 
-    if (initialRender) {
-      setLoading(false);
-    }
+    setLoading(false);
   }
 
-  return <AuthContext.Provider value={{ user, loading, updateUser }}> {children} </AuthContext.Provider>;
+  // Login
+  async function login(data: LoginInterface): Promise<ResponseInterface> {
+    const url: string = "/api/login";
+
+    const response: Response = await fetch(url, {
+      mode: "same-origin",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+
+    const res: ResponseInterface = await response.json();
+
+    if (res.success) {
+      const tempUser: UserInterface = JSON.parse(res.message) as UserInterface;
+      setUser(tempUser);
+
+      res.message = `Welcome ${tempUser.name}`;
+    }
+
+    return res;
+  }
+
+  // Logout
+  async function logout(): Promise<ResponseInterface> {
+    const url: string = "/api/logout";
+
+    const response: Response = await fetch(url, {
+      mode: "same-origin",
+      credentials: "same-origin",
+      method: "GET"
+    });
+
+    const res: ResponseInterface = await response.json();
+
+    setUser(null);
+
+    return res;
+  }
+
+  return <AuthContext.Provider value={{ user, loading, login, logout }}> {children} </AuthContext.Provider>;
 }
 
 // Use Auth Hook

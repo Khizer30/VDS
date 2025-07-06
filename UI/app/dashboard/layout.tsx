@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import toast from "react-hot-toast";
 import { useState, type ReactNode } from "react";
 import { redirect, RedirectType } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,8 +15,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 //
 import Loading from "@components/Loading";
+import Loader from "@components/Loader";
 import { useAuth } from "@components/AuthContext";
-import type { LinkInterface } from "@models/types";
+import type { ResponseInterface, LinkInterface } from "@models/types";
 import icon from "@images/icon.webp";
 
 // Props
@@ -50,15 +52,11 @@ const links: LinkInterface[] = [
 // Layout
 export default function Layout({ children }: Props): ReactNode {
   // Constructors
-  const { user, loading } = useAuth();
+  const { user, loading, logout } = useAuth();
 
   // States
+  const [loader, setLoader] = useState<boolean>(false);
   const [isSidebarOpen, setSidebarOpen] = useState<boolean>(true);
-
-  // Toggle Sidebar
-  function toggleSidebar(): void {
-    setSidebarOpen(!isSidebarOpen);
-  }
 
   // Loading Screen
   if (loading) {
@@ -84,8 +82,28 @@ export default function Layout({ children }: Props): ReactNode {
     );
   }
 
+  // Toggle Sidebar
+  function toggleSidebar(): void {
+    setSidebarOpen(!isSidebarOpen);
+  }
+
+  // Logout User
+  async function logoutUser(): Promise<void> {
+    setLoader(true);
+
+    let res: ResponseInterface = await logout();
+
+    if (res.success) {
+      toast.success(res.message);
+      redirect("/login", RedirectType.replace);
+    }
+
+    setLoader(false);
+  }
+
   return (
     <>
+      {loader && <Loader />}
       {/* Sidebar */}
       <aside
         className={`fixed top-0 z-10 flex h-screen flex-col justify-between px-4 pt-[16.667%] pb-2 transition-all duration-300 ease-in-out md:pt-2 ${isSidebarOpen ? "w-full translate-x-0 md:w-4/12 md:pt-2 lg:w-[25%] xl:w-[20%]" : "-translate-x-full"}`}
@@ -98,7 +116,10 @@ export default function Layout({ children }: Props): ReactNode {
           </div>
           <div className="flex h-full w-full flex-col items-center justify-end">
             <hr className="my-4 w-11/12 rounded-lg text-white" />
-            <button className="font-primary my-1 w-11/12 cursor-pointer rounded-lg px-4 py-3 text-left text-sm text-white transition-all hover:bg-gray-700 active:bg-white active:text-gray-900">
+            <button
+              onClick={logoutUser}
+              className="font-primary my-1 w-11/12 cursor-pointer rounded-lg px-4 py-3 text-left text-sm text-white transition-all hover:bg-gray-700 active:bg-white active:text-gray-900"
+            >
               <FontAwesomeIcon icon={faRightFromBracket} className="mr-4" />
               Logout
             </button>

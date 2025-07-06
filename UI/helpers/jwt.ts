@@ -46,3 +46,9 @@ export function verifyToken(token: string, type: "ACCESS" | "REFRESH"): TokenInt
 
   return jwt.verify(token, secret) as TokenInterface | string;
 }
+
+// Clear Cookies
+export async function clearCookies(): Promise<void> {
+  (await cookies()).delete("accessToken");
+  (await cookies()).delete("refreshToken");
+}

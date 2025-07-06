@@ -1,8 +1,8 @@
 import { PrismaClient, type User } from "@app/generated/prisma";
 //
 import { hashPassword, comparePasswords } from "@helpers/encrypt";
-import { setCookies } from "@helpers/jwt";
-import { ResponseInterface, SignupInterface, LoginInterface } from "@models/types";
+import { setCookies, clearCookies } from "@helpers/jwt";
+import { ResponseInterface, SignupInterface, LoginInterface, UserInterface } from "@models/types";
 
 // Signup
 export async function signup(data: SignupInterface): Promise<ResponseInterface> {
@@ -40,8 +40,13 @@ export async function login(data: LoginInterface): Promise<ResponseInterface> {
       if (isValid) {
         await setCookies(user.id.toString(), user.name);
 
+        const userObj: UserInterface = {
+          userID: user.id.toString(),
+          name: user.name
+        };
+
         response.success = true;
-        response.message = `Welcome ${user.name}`;
+        response.message = JSON.stringify(userObj);
       } else {
         response.success = false;
         response.message = "The password you entered is incorrect";
@@ -56,6 +61,18 @@ export async function login(data: LoginInterface): Promise<ResponseInterface> {
   } finally {
     await prisma.$disconnect();
   }
+
+  return response;
+}
+
+// Logout
+export async function logout(): Promise<ResponseInterface> {
+  const response: ResponseInterface = { success: false, message: "" };
+
+  await clearCookies();
+
+  response.success = true;
+  response.message = "Logout successful";
 
   return response;
 }

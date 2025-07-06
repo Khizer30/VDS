@@ -18,7 +18,7 @@ const Lottie = dynamic(() => import("react-lottie-player"), { ssr: false });
 // Login From
 export default function LoginForm(): ReactNode {
   // Constructors
-  const { user, loading, updateUser } = useAuth();
+  const { user, loading, login } = useAuth();
 
   // States
   const [loader, setLoader] = useState<boolean>(false);
@@ -44,7 +44,7 @@ export default function LoginForm(): ReactNode {
   // On Submit
   const onSubmit: SubmitHandler<LoginInterface> = (data: LoginInterface) => {
     if (validateForm(data)) {
-      login(data);
+      loginUser(data);
     }
   };
 
@@ -75,25 +75,13 @@ export default function LoginForm(): ReactNode {
     }
   }
 
-  // Login
-  async function login(inputs: LoginInterface): Promise<void> {
-    const url: string = "/api/login";
+  // Login User
+  async function loginUser(inputs: LoginInterface): Promise<void> {
     setLoader(true);
 
-    const response: Response = await fetch(url, {
-      mode: "same-origin",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(inputs)
-    });
-
-    let res: ResponseInterface = await response.json();
+    const res: ResponseInterface = await login(inputs);
 
     if (res.success) {
-      await updateUser(false);
-
       toast.success(res.message);
       redirect("/dashboard", RedirectType.replace);
     } else {
