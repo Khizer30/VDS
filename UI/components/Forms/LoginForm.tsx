@@ -25,6 +25,8 @@ export default function LoginForm(): ReactNode {
   const {
     register,
     handleSubmit,
+    setValue,
+    getValues,
     formState: { errors, touchedFields }
   } = useForm<LoginInterface>({
     mode: "onTouched",
@@ -43,28 +45,18 @@ export default function LoginForm(): ReactNode {
 
   // On Submit
   const onSubmit: SubmitHandler<LoginInterface> = (data: LoginInterface) => {
-    if (validateForm(data)) {
-      loginUser(data);
-    }
+    loginUser(data);
   };
 
   // On Error
   const onError = () => {
     toast.error("Please enter valid details");
+
+    for (let fieldName in errors) {
+      // @ts-ignore
+      setValue(fieldName, getValues(fieldName), { shouldTouch: true });
+    }
   };
-
-  // Validate Form
-  function validateForm(data: LoginInterface): boolean {
-    let flag: boolean = true;
-
-    Object.keys(data).forEach((key: string): void => {
-      if (!validate(key)) {
-        flag = false;
-      }
-    });
-
-    return flag;
-  }
 
   // Validate
   function validate(name: string): boolean {

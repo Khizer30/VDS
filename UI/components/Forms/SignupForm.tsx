@@ -25,6 +25,8 @@ export default function SignupForm(): ReactNode {
   const {
     register,
     handleSubmit,
+    setValue,
+    getValues,
     reset,
     formState: { errors, touchedFields }
   } = useForm<SignupInterface>({
@@ -44,32 +46,22 @@ export default function SignupForm(): ReactNode {
 
   // On Submit
   const onSubmit: SubmitHandler<SignupInterface> = (data: SignupInterface) => {
-    if (validateForm(data)) {
-      if (data.password === data.repassword) {
-        signup(data);
-      } else {
-        toast.error("Passwords do not match");
-      }
+    if (data.password === data.repassword) {
+      signupUser(data);
+    } else {
+      toast.error("Passwords do not match");
     }
   };
 
   // On Error
   const onError = () => {
     toast.error("Please enter valid details");
+
+    for (let fieldName in errors) {
+      // @ts-ignore
+      setValue(fieldName, getValues(fieldName), { shouldTouch: true });
+    }
   };
-
-  // Validate Form
-  function validateForm(data: SignupInterface): boolean {
-    let flag: boolean = true;
-
-    Object.keys(data).forEach((key: string): void => {
-      if (!validate(key)) {
-        flag = false;
-      }
-    });
-
-    return flag;
-  }
 
   // Validate
   function validate(name: string): boolean {
@@ -80,8 +72,8 @@ export default function SignupForm(): ReactNode {
     }
   }
 
-  // Signup
-  async function signup(inputs: SignupInterface): Promise<void> {
+  // Signup User
+  async function signupUser(inputs: SignupInterface): Promise<void> {
     const url: string = "/api/signup";
     setLoader(true);
 
