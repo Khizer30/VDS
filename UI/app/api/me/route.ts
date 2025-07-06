@@ -6,7 +6,7 @@ import type { ResponseInterface, TokenInterface, UserInterface } from "@models/t
 
 // Me API
 export async function GET(): Promise<NextResponse<ResponseInterface>> {
-  const res: ResponseInterface = { success: false, message: "" };
+  const response: ResponseInterface = { success: false, message: "" };
   const accessToken: string | undefined = (await cookies()).get("accessToken")?.value;
   const refreshToken: string | undefined = (await cookies()).get("refreshToken")?.value;
 
@@ -19,8 +19,8 @@ export async function GET(): Promise<NextResponse<ResponseInterface>> {
         name: accessTokenPayload.name
       };
 
-      res.success = true;
-      res.message = JSON.stringify(user);
+      response.success = true;
+      response.message = JSON.stringify(user);
     }
   } else if (refreshToken) {
     const refreshTokenPayload: TokenInterface | string = verifyToken(refreshToken, "REFRESH");
@@ -33,10 +33,10 @@ export async function GET(): Promise<NextResponse<ResponseInterface>> {
 
       await setCookies(refreshTokenPayload.userID, refreshTokenPayload.name);
 
-      res.success = true;
-      res.message = JSON.stringify(user);
+      response.success = true;
+      response.message = JSON.stringify(user);
     }
   }
 
-  return NextResponse.json(res);
+  return NextResponse.json(response);
 }

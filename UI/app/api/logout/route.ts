@@ -1,11 +1,16 @@
 import { NextResponse } from "next/server";
 //
-import { logout } from "@helpers/server";
+import { clearCookies } from "@helpers/jwt";
 import type { ResponseInterface } from "@models/types";
 
 // Logout API
 export async function GET(): Promise<NextResponse<ResponseInterface>> {
-  const res: ResponseInterface = await logout();
+  const response: ResponseInterface = { success: false, message: "" };
 
-  return NextResponse.json(res);
+  await clearCookies();
+
+  response.success = true;
+  response.message = "Logout successful";
+
+  return NextResponse.json(response);
 }
