@@ -106,7 +106,7 @@ export default function Layout({ children }: Props): ReactNode {
       {loader && <Loader />}
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 z-10 flex h-screen flex-col justify-between px-4 pt-[16.667%] pb-2 transition-all duration-300 ease-in-out md:pt-2 ${isSidebarOpen ? "w-full translate-x-0 md:w-4/12 md:pt-2 lg:w-[25%] xl:w-[20%]" : "-translate-x-full"}`}
+        className={`fixed top-0 z-10 flex h-full flex-col justify-between px-4 pt-[16.667%] pb-2 transition-all duration-300 ease-in-out md:pt-2 ${isSidebarOpen ? "w-full translate-x-0 md:w-4/12 md:pt-2 lg:w-[25%] xl:w-[20%]" : "-translate-x-full"}`}
       >
         <div className="flex h-full w-full flex-col items-center justify-between rounded-lg bg-gray-900 p-6">
           <div className="flex h-full w-full flex-col items-center justify-start">
