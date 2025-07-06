@@ -86,8 +86,9 @@ export default function Layout({ children }: Props): ReactNode {
 
   return (
     <>
+      {/* Sidebar */}
       <aside
-        className={`fixed top-0 z-10 flex h-screen w-full flex-col justify-between px-4 pb-2 transition duration-300 ${isSidebarOpen ? "pt-[16.667%] md:w-4/12 md:pt-2 lg:w-[25%] xl:w-[20%]" : "ml-[-100%] w-0"}`}
+        className={`fixed top-0 z-10 flex h-screen flex-col justify-between px-4 pt-[16.667%] pb-2 transition-all duration-300 ease-in-out md:pt-2 ${isSidebarOpen ? "w-full translate-x-0 md:w-4/12 md:pt-2 lg:w-[25%] xl:w-[20%]" : "-translate-x-full"}`}
       >
         <div className="flex h-full w-full flex-col items-center justify-between rounded-lg bg-gray-900 p-6">
           <div className="flex h-full w-full flex-col items-center justify-start">
@@ -104,7 +105,11 @@ export default function Layout({ children }: Props): ReactNode {
           </div>
         </div>
       </aside>
-      <div className={`ml-auto px-4 py-2 ${isSidebarOpen ? "md:w-2/3 lg:w-[75%] xl:w-[80%]" : "w-full"}`}>
+
+      <div
+        className={`ml-auto px-4 py-2 transition-all duration-300 ease-in-out ${isSidebarOpen ? "md:w-2/3 lg:w-[75%] xl:w-[80%]" : "w-full"}`}
+      >
+        {/* Topbar */}
         <div className="sticky top-0 z-10 h-2/12 rounded-lg bg-gray-900 py-2">
           <div className="flex items-center justify-between space-x-4 px-4">
             <h1 className="font-primary px-3 text-sm text-white"> Salam, {user.name} </h1>
@@ -116,6 +121,7 @@ export default function Layout({ children }: Props): ReactNode {
             </button>
           </div>
         </div>
+        {/* Content */}
         <div> {children} </div>
       </div>
     </>
