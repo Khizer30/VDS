@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 //
-import { createUserSession } from "@helpers/refreshToken";
+import { createUserSession, extendUserSession } from "@helpers/refreshToken";
 import type { TokenInterface } from "@models/types";
 
 const ACCESS_SECRET: string = process.env.ACCESS_SECRET!;
@@ -47,6 +47,33 @@ export async function setCookies(userID: string, name: string): Promise<void> {
 }
 
 // Renew Cookies
+export async function renewCookies(userID: string, name: string, refreshTokenPrev: string): Promise<void> {
+  const accessToken: string = generateAccessToken(userID, name);
+  const refreshTokenNew: string = generateRefreshToken(userID, name);
+
+  const createdAt: Date = new Date(Date.now());
+  const expiresAt: Date = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
+  const secure: boolean = process.env.NODE_ENV === "production" ? true : false;
+
+  (await cookies()).set("accessToken", accessToken, {
+    httpOnly: true,
+    secure: secure,
+    sameSite: "strict",
+    path: "/",
+    maxAge: 15 * 60
+  });
+
+  (await cookies()).set("refreshToken", refreshTokenNew, {
+    httpOnly: true,
+    secure: secure,
+    sameSite: "strict",
+    path: "/",
+    maxAge: 7 * 24 * 60 * 60
+  });
+
+  await extendUserSession(userID, refreshTokenPrev, refreshTokenNew, createdAt, expiresAt);
+}
 
 // Verify Token
 export function verifyToken(token: string, type: "ACCESS" | "REFRESH"): TokenInterface | string {
