@@ -64,3 +64,27 @@ export async function extendUserSession(
     await prisma.$disconnect();
   }
 }
+
+// Validate Refresh Token
+export async function validateRefreshToken(refreshToken: string): Promise<boolean> {
+  let flag: boolean = false;
+  const prisma: PrismaClient = new PrismaClient();
+
+  try {
+    const session: Session | null = await prisma.session.findUnique({
+      where: {
+        refreshToken: refreshToken
+      }
+    });
+
+    if (session && !session.revoked) {
+      flag = true;
+    }
+  } catch {
+    console.log("Failed to validate refresh token in database");
+  } finally {
+    await prisma.$disconnect();
+  }
+
+  return flag;
+}

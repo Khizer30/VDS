@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 //
 import { renewCookies, verifyToken } from "@helpers/jwt";
+import { validateRefreshToken } from "@helpers/refreshToken";
 import type { ResponseInterface, TokenInterface, UserInterface } from "@models/types";
 
 // Me API
@@ -22,9 +23,7 @@ export async function GET(): Promise<NextResponse<ResponseInterface>> {
       response.success = true;
       response.message = JSON.stringify(user);
     }
-  } else if (refreshToken) {
-    // Check If Not Revoked In Database
-
+  } else if (refreshToken && (await validateRefreshToken(refreshToken))) {
     const refreshTokenPayload: TokenInterface | string = verifyToken(refreshToken, "REFRESH");
 
     if (refreshTokenPayload instanceof Object) {
