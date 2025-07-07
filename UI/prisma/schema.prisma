@@ -31,6 +31,7 @@ model User {
   password String @default("")
 
   Vehicle Vehicle[]
+  Session Session[]
 }
 
 model Vehicle {
@@ -62,4 +63,18 @@ model Detection {
   vehicle Vehicle @relation(fields: [vehicleID], references: [id])
 
   @@index([vehicleID])
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  userID       Int      @default(0)
+  refreshToken String   @unique @default("")
+  createdAt    DateTime @default(now())
+  expiresAt    DateTime @default(now())
+  revoked      Boolean  @default(false)
+  replacedByID Int?     @unique
+
+  user       User     @relation(fields: [userID], references: [id], onDelete: Cascade)
+  replacedBy Session? @relation("SessionReplacedBy", fields: [replacedByID], references: [id])
+  parent     Session? @relation("SessionReplacedBy")
 }

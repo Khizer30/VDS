@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 //
-import { setCookies, verifyToken } from "@helpers/jwt";
+import { verifyToken } from "@helpers/jwt";
 import type { ResponseInterface, TokenInterface, UserInterface } from "@models/types";
 
 // Me API
@@ -31,7 +31,7 @@ export async function GET(): Promise<NextResponse<ResponseInterface>> {
         name: refreshTokenPayload.name
       };
 
-      await setCookies(refreshTokenPayload.userID, refreshTokenPayload.name);
+      // Renew Access Token & Refresh Token
 
       response.success = true;
       response.message = JSON.stringify(user);
