@@ -106,7 +106,7 @@ export default function Layout({ children }: Props): ReactNode {
       {loader && <Loader />}
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 z-10 flex h-full flex-col justify-between px-4 pt-[16.667%] pb-2 transition-all duration-300 ease-in-out md:pt-2 ${isSidebarOpen ? "w-full translate-x-0 md:w-4/12 md:pt-2 lg:w-[25%] xl:w-[20%]" : "-translate-x-full"}`}
+        className={`fixed top-0 z-10 flex h-full flex-col justify-between px-4 pt-[17.5%] pb-2 transition-all duration-300 ease-in-out md:pt-2 ${isSidebarOpen ? "w-full translate-x-0 md:w-4/12 md:pt-2 lg:w-[25%] xl:w-[20%]" : "-translate-x-full"}`}
       >
         <div className="flex h-full w-full flex-col items-center justify-between rounded-lg bg-gray-900 p-6">
           <div className="flex h-full w-full flex-col items-center justify-start">
@@ -128,11 +128,11 @@ export default function Layout({ children }: Props): ReactNode {
       </aside>
 
       <div
-        className={`ml-auto px-4 py-2 transition-all duration-300 ease-in-out ${isSidebarOpen ? "md:w-2/3 lg:w-[75%] xl:w-[80%]" : "w-full"}`}
+        className={`ml-auto h-screen px-4 py-2 transition-all duration-300 ease-in-out ${isSidebarOpen ? "md:w-2/3 lg:w-[75%] xl:w-[80%]" : "w-full"}`}
       >
         {/* Topbar */}
-        <div className="sticky top-0 z-10 h-2/12 rounded-lg bg-gray-900 py-2">
-          <div className="flex items-center justify-between space-x-4 px-4">
+        <div className="sticky top-0 z-10 flex h-[6%] items-center justify-center rounded-lg bg-gray-900 px-4 py-2 md:h-[5%]">
+          <div className="flex h-full w-full items-center justify-between">
             <h1 className="font-primary px-3 text-sm text-white"> Salam, {user.name} </h1>
             <button
               onClick={toggleSidebar}
@@ -143,7 +143,7 @@ export default function Layout({ children }: Props): ReactNode {
           </div>
         </div>
         {/* Content */}
-        <div> {children} </div>
+        <div className="flex h-[94%] flex-col items-center justify-center px-4 py-2 md:h-[95%]"> {children} </div>
       </div>
     </>
   );

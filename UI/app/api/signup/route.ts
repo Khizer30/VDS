@@ -12,7 +12,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<ResponseInter
 
   try {
     await prisma.user.create({
-      data: { name: data.name, email: data.email, password: await hashPassword(data.password) }
+      data: { name: data.name, email: data.email, password: await hashPassword(data.password), isAdmin: false }
     });
 
     response.success = true;

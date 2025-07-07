@@ -25,10 +25,11 @@ model Colour {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String @default("")
-  email    String @unique @default("")
-  password String @default("")
+  id       Int     @id @default(autoincrement())
+  name     String  @default("")
+  email    String  @unique @default("")
+  password String  @default("")
+  isAdmin  Boolean @default(false)
 
   Vehicle Vehicle[]
   Session Session[]
