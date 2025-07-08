@@ -32,7 +32,7 @@ export default function RegisterForm(): ReactNode {
   // On Mount
   useEffect(() => {
     (async () => {
-      const url: string = "/api/register";
+      const url: string = "/api/register-vehicle";
 
       const response: Response = await fetch(url, {
         mode: "same-origin",
@@ -83,7 +83,7 @@ export default function RegisterForm(): ReactNode {
 
   // Register Vehicle
   async function registerVehicle(inputs: RegisterInterface): Promise<void> {
-    const url: string = "/api/register";
+    const url: string = "/api/register-vehicle";
     setLoader(true);
 
     const response: Response = await fetch(url, {

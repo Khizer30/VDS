@@ -3,7 +3,7 @@ import { PrismaClient, type Vehicle } from "@app/generated/prisma";
 //
 import type { ResponseInterface, RegisterInterface, RegisterResponseInterface } from "@models/types";
 
-// Register API
+// Register Vehicle API
 export async function GET(): Promise<NextResponse<RegisterResponseInterface>> {
   const response: RegisterResponseInterface = { success: false, message: "", users: [], makes: [], colours: [] };
   const prisma: PrismaClient = new PrismaClient();
@@ -25,7 +25,7 @@ export async function GET(): Promise<NextResponse<RegisterResponseInterface>> {
   return NextResponse.json(response);
 }
 
-// Register API
+// Register Vehicle API
 export async function POST(req: NextRequest): Promise<NextResponse<ResponseInterface>> {
   const response: ResponseInterface = { success: false, message: "" };
   const prisma: PrismaClient = new PrismaClient();

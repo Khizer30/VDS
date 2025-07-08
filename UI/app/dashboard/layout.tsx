@@ -40,12 +40,12 @@ const links: LinkInterface[] = [
   {
     name: "Register Vehicle",
     icon: faCar,
-    url: "/dashboard/register"
+    url: "/dashboard/register-vehicle"
   },
   {
     name: "Remove Vehicle",
     icon: faTrash,
-    url: "/dashboard/remove"
+    url: "/dashboard/remove-vehicle"
   }
 ];
 
