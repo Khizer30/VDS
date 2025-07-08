@@ -52,7 +52,7 @@ export default function LoginForm(): ReactNode {
   const onError = () => {
     toast.error("Please enter valid details");
 
-    for (let fieldName in errors) {
+    for (let fieldName in getValues()) {
       // @ts-ignore
       setValue(fieldName, getValues(fieldName), { shouldTouch: true });
     }

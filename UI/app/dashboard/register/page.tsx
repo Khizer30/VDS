@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
+//
+import RegisterForm from "@components/Forms/RegisterForm";
 
 export const metadata: Metadata = {
   title: "Register Vehicle | Vehicle Detection System"
@@ -9,7 +11,7 @@ export const metadata: Metadata = {
 export default function Page(): ReactNode {
   return (
     <>
-      <h1> Register Vehicle </h1>
+      <RegisterForm />
     </>
   );
 }

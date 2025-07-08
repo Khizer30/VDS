@@ -1,3 +1,4 @@
+import type { User, Make, Colour } from "@app/generated/prisma";
 import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 // Response Interface
@@ -49,6 +50,23 @@ interface LinkInterface {
   url: string;
 }
 
+// Register Interface
+interface RegisterInterface {
+  ownerID: string;
+  makeID: string;
+  colourID: string;
+  numberPlate: string;
+}
+
+// Register Response Interface
+interface RegisterResponseInterface {
+  success: boolean;
+  message: string;
+  users: User[];
+  makes: Make[];
+  colours: Colour[];
+}
+
 export type {
   ResponseInterface,
   TokenInterface,
@@ -56,5 +74,7 @@ export type {
   SignupInterface,
   UserInterface,
   AuthContextInterface,
-  LinkInterface
+  LinkInterface,
+  RegisterInterface,
+  RegisterResponseInterface
 };
