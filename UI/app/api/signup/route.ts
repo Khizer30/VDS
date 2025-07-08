@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { PrismaClient } from "@app/generated/prisma";
+import { PrismaClient, type User } from "@app/generated/prisma";
 //
 import { hashPassword } from "@helpers/encrypt";
 import type { ResponseInterface, SignupInterface } from "@models/types";
@@ -11,12 +11,19 @@ export async function POST(req: NextRequest): Promise<NextResponse<ResponseInter
   const data: SignupInterface = await req.json();
 
   try {
-    await prisma.user.create({
-      data: { name: data.name, email: data.email, password: await hashPassword(data.password), isAdmin: false }
-    });
+    const user: User | null = await prisma.user.findUnique({ where: { email: data.email } });
 
-    response.success = true;
-    response.message = "User registration successful.";
+    if (!user) {
+      await prisma.user.create({
+        data: { name: data.name, email: data.email, password: await hashPassword(data.password), isAdmin: false }
+      });
+
+      response.success = true;
+      response.message = "User registration successful.";
+    } else {
+      response.success = false;
+      response.message = "User is already registered.";
+    }
   } catch {
     response.success = false;
     response.message = "An error occurred during database operation";

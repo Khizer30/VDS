@@ -4,3 +4,9 @@
 {
   --font-primary: "Roboto Variable", "sans-serif";
 }
+
+/* Body */
+body
+{
+  font-family: "Roboto Variable", "sans-serif";
+}
