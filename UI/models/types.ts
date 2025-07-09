@@ -1,4 +1,4 @@
-import type { User, Make, Colour } from "@app/generated/prisma";
+import type { User, Make, Colour, Vehicle } from "@app/generated/prisma";
 import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 // Response Interface
@@ -67,6 +67,27 @@ interface RegisterResponseInterface {
   colours: Colour[];
 }
 
+// Vehicle Interface
+interface VehicleInterface {
+  id: number;
+  owner: string;
+  make: string;
+  colour: string;
+  numberPlate: string;
+}
+
+// Remove Vehicle Interface
+interface RemoveVehicleInterface {
+  vehicleID: number;
+}
+
+// Remove Vehicle Response Interface
+interface RemoveVehicleResponseInterface {
+  success: boolean;
+  message: string;
+  vehicles: VehicleInterface[];
+}
+
 export type {
   ResponseInterface,
   TokenInterface,
@@ -76,5 +97,8 @@ export type {
   AuthContextInterface,
   LinkInterface,
   RegisterInterface,
-  RegisterResponseInterface
+  RegisterResponseInterface,
+  VehicleInterface,
+  RemoveVehicleInterface,
+  RemoveVehicleResponseInterface
 };
