@@ -5,14 +5,7 @@ import toast from "react-hot-toast";
 import { useState, type ReactNode } from "react";
 import { redirect, RedirectType } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCar,
-  faTachometerAlt,
-  faRightFromBracket,
-  faTable,
-  faTrash,
-  faBars
-} from "@fortawesome/free-solid-svg-icons";
+import { faCar, faTachometerAlt, faRightFromBracket, faTable, faBars, faPlus } from "@fortawesome/free-solid-svg-icons";
 //
 import Loading from "@components/Loading";
 import Loader from "@components/Loader";
@@ -39,13 +32,13 @@ const links: LinkInterface[] = [
   },
   {
     name: "Register Vehicle",
-    icon: faCar,
+    icon: faPlus,
     url: "/dashboard/register-vehicle"
   },
   {
-    name: "Remove Vehicle",
-    icon: faTrash,
-    url: "/dashboard/remove-vehicle"
+    name: "View Vehicles",
+    icon: faCar,
+    url: "/dashboard/vehicles"
   }
 ];
 

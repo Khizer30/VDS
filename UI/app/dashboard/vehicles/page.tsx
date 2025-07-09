@@ -1,17 +1,17 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 //
-import RemoveVehicleForm from "@components/Forms/RemoveVehicleForm";
+import VehiclesForm from "@components/Forms/VehiclesForm";
 
 export const metadata: Metadata = {
-  title: "Register Vehicle | Vehicle Detection System"
+  title: "Vehicles | Vehicle Detection System"
 };
 
-// Register Vehicle Page
+// Vehicles Page
 export default function Page(): ReactNode {
   return (
     <>
-      <RemoveVehicleForm />
+      <VehiclesForm />
     </>
   );
 }

@@ -9,12 +9,12 @@ import Loader from "@components/Loader";
 import type {
   ResponseInterface,
   VehicleInterface,
-  RemoveVehicleInterface,
-  RemoveVehicleResponseInterface
+  VehiclesResponseInterface,
+  RemoveVehicleInterface
 } from "@models/types";
 
-// Remove Vehicle Form
-export default function RemoveVehicleForm(): ReactNode {
+// Vehicles Form
+export default function VehiclesForm(): ReactNode {
   // States
   const [loader, setLoader] = useState<boolean>(true);
   const [vehicles, setVehicles] = useState<VehicleInterface[]>([]);
@@ -22,7 +22,7 @@ export default function RemoveVehicleForm(): ReactNode {
   // On Mount
   useEffect(() => {
     (async () => {
-      const url: string = "/api/remove-vehicle";
+      const url: string = "/api/vehicles";
 
       const response: Response = await fetch(url, {
         mode: "same-origin",
@@ -32,7 +32,7 @@ export default function RemoveVehicleForm(): ReactNode {
         }
       });
 
-      let res: RemoveVehicleResponseInterface = await response.json();
+      const res: VehiclesResponseInterface = await response.json();
 
       if (res.success) {
         setVehicles(res.vehicles);
@@ -95,11 +95,11 @@ export default function RemoveVehicleForm(): ReactNode {
   function rowMapper(x: VehicleInterface): ReactNode {
     return (
       <tr key={x.id} className="even:bg-gray-100">
-        <td className="font-primary border border-gray-500 p-4"> {x.owner} </td>
-        <td className="font-primary border border-gray-500 p-4"> {x.make} </td>
-        <td className="font-primary border border-gray-500 p-4"> {x.colour} </td>
-        <td className="font-primary border border-gray-500 p-4"> {x.numberPlate} </td>
-        <td className="flex items-center justify-center border border-gray-500 p-2">
+        <td className="font-primary h-14 border border-gray-500 px-4"> {x.owner} </td>
+        <td className="font-primary h-14 border border-gray-500 px-4"> {x.make} </td>
+        <td className="font-primary h-14 border border-gray-500 px-4"> {x.colour} </td>
+        <td className="font-primary h-14 border border-gray-500 px-4"> {x.numberPlate} </td>
+        <td className="font-primary flex h-14 items-center justify-center border border-gray-500 px-4">
           <button
             onClick={() => removeVehicle(x.id)}
             className="cursor-pointer rounded-lg p-2 transition-all hover:bg-gray-500 hover:text-white active:bg-gray-900"
@@ -115,7 +115,7 @@ export default function RemoveVehicleForm(): ReactNode {
     <>
       {loader && <Loader />}
       <div className="w-[95%] rounded-xl p-2 md:w-11/12 md:p-8 lg:w-5/6">
-        <h1 className="font-primary mt-4 mb-8 text-center text-3xl font-medium"> Remove Vehicle </h1>
+        <h1 className="font-primary mt-4 mb-8 text-center text-3xl font-medium"> View Vehicles </h1>
         <div className="max-h-[80%] w-full overflow-x-scroll overflow-y-scroll">
           <table className="my-4 w-full table-auto">
             <thead>

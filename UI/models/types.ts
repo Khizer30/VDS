@@ -76,16 +76,16 @@ interface VehicleInterface {
   numberPlate: string;
 }
 
-// Remove Vehicle Interface
-interface RemoveVehicleInterface {
-  vehicleID: number;
-}
-
-// Remove Vehicle Response Interface
-interface RemoveVehicleResponseInterface {
+// Vehicles Response Interface
+interface VehiclesResponseInterface {
   success: boolean;
   message: string;
   vehicles: VehicleInterface[];
+}
+
+// Remove Vehicle Interface
+interface RemoveVehicleInterface {
+  vehicleID: number;
 }
 
 export type {
@@ -99,6 +99,6 @@ export type {
   RegisterInterface,
   RegisterResponseInterface,
   VehicleInterface,
-  RemoveVehicleInterface,
-  RemoveVehicleResponseInterface
+  VehiclesResponseInterface,
+  RemoveVehicleInterface
 };
