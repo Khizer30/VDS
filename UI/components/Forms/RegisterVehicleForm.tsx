@@ -10,8 +10,8 @@ import type { User, Make, Colour } from "@app/generated/prisma";
 import Loader from "@components/Loader";
 import type { ResponseInterface, RegisterInterface, RegisterResponseInterface } from "@models/types";
 
-// Register Form
-export default function RegisterForm(): ReactNode {
+// Register Vehicle Form
+export default function RegisterVehicleForm(): ReactNode {
   // States
   const [loader, setLoader] = useState<boolean>(true);
   const [users, setUsers] = useState<User[]>([]);
