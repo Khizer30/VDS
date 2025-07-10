@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
+//
+import Dashboard from "@components/Dashboard";
 
 export const metadata: Metadata = {
   title: "Dashboard | Vehicle Detection System"
@@ -9,7 +11,7 @@ export const metadata: Metadata = {
 export default function Page(): ReactNode {
   return (
     <>
-      <h1> Dashboard </h1>
+      <Dashboard />
     </>
   );
 }

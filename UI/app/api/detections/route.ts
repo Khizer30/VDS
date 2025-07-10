@@ -3,7 +3,7 @@ import { PrismaClient } from "@app/generated/prisma";
 //
 import type { DetectionInterface, DetectionResponseInterface } from "@models/types";
 
-// Vehicles API
+// Detections API
 export async function GET(): Promise<NextResponse<DetectionResponseInterface>> {
   const response: DetectionResponseInterface = { success: false, message: "", detections: [] };
   const prisma: PrismaClient = new PrismaClient();
