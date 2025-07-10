@@ -44,7 +44,7 @@ model Vehicle {
 
   make   Make   @relation(fields: [makeID], references: [id])
   colour Colour @relation(fields: [colourID], references: [id])
-  user   User   @relation(fields: [userID], references: [id])
+  user   User   @relation(fields: [userID], references: [id], onDelete: Cascade)
 
   Detection Detection[]
 
@@ -61,7 +61,7 @@ model Detection {
   timestamp   DateTime @default(now())
   vehicleID   Int      @default(0)
 
-  vehicle Vehicle @relation(fields: [vehicleID], references: [id])
+  vehicle Vehicle @relation(fields: [vehicleID], references: [id], onDelete: Cascade)
 
   @@index([vehicleID])
 }

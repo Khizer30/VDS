@@ -25,7 +25,7 @@ export async function setCookies(userID: string, name: string): Promise<void> {
   const createdAt: Date = new Date(Date.now());
   const expiresAt: Date = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
-  const secure: boolean = process.env.NODE_ENV === "production" ? true : false;
+  const secure: boolean = process.env.SECURE === "TRUE" ? true : false;
 
   (await cookies()).set("accessToken", accessToken, {
     httpOnly: true,
@@ -54,7 +54,7 @@ export async function renewCookies(userID: string, name: string, refreshTokenPre
   const createdAt: Date = new Date(Date.now());
   const expiresAt: Date = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
-  const secure: boolean = process.env.NODE_ENV === "production" ? true : false;
+  const secure: boolean = process.env.SECURE === "TRUE" ? true : false;
 
   (await cookies()).set("accessToken", accessToken, {
     httpOnly: true,

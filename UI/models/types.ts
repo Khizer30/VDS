@@ -88,6 +88,24 @@ interface RemoveVehicleInterface {
   vehicleID: number;
 }
 
+// Detection Interface
+interface DetectionInterface {
+  id: number;
+  makeExpected: string;
+  makeDetected: string;
+  colourExpected: string;
+  colourDetected: string;
+  numberPlate: string;
+  timestamp: Date;
+}
+
+// Detection Response Interface
+interface DetectionResponseInterface {
+  success: boolean;
+  message: string;
+  detections: DetectionInterface[];
+}
+
 export type {
   ResponseInterface,
   TokenInterface,
@@ -100,5 +118,7 @@ export type {
   RegisterResponseInterface,
   VehicleInterface,
   VehiclesResponseInterface,
-  RemoveVehicleInterface
+  RemoveVehicleInterface,
+  DetectionInterface,
+  DetectionResponseInterface
 };

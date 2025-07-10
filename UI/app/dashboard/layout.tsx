@@ -28,7 +28,7 @@ const links: LinkInterface[] = [
   {
     name: "View Detections",
     icon: faTable,
-    url: "/dashboard/view"
+    url: "/dashboard/detections"
   },
   {
     name: "Register Vehicle",

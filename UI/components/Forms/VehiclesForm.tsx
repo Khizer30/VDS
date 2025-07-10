@@ -106,7 +106,7 @@ export default function VehiclesForm(): ReactNode {
         <td className="font-primary flex h-14 items-center justify-center border-r border-b border-gray-500 px-4">
           <button
             onClick={() => removeVehicle(x.id)}
-            className="cursor-pointer rounded-lg p-2 transition-all hover:bg-gray-500 hover:text-white active:bg-gray-900"
+            className="cursor-pointer rounded-lg p-2 text-gray-900 transition-all hover:bg-gray-500 hover:text-white active:bg-gray-900"
           >
             <FontAwesomeIcon icon={faTrash} />
           </button>
