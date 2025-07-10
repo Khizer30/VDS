@@ -13,8 +13,8 @@ import type {
   RemoveVehicleInterface
 } from "@models/types";
 
-// Vehicles Form
-export default function VehiclesForm(): ReactNode {
+// Vehicle Table
+export default function VehicleTable(): ReactNode {
   // States
   const [loader, setLoader] = useState<boolean>(true);
   const [vehicles, setVehicles] = useState<VehicleInterface[]>([]);

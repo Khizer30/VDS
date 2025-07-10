@@ -1,17 +1,17 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 //
-import VehicleTable from "@components/Tables/VehicleTable";
+import DetectionTable from "@components/Tables/DetectionTable";
 
 export const metadata: Metadata = {
-  title: "Vehicles | Vehicle Detection System"
+  title: "Detections | Vehicle Detection System"
 };
 
-// Vehicles Page
+// Detections Page
 export default function Page(): ReactNode {
   return (
     <>
-      <VehicleTable />
+      <DetectionTable />
     </>
   );
 }
