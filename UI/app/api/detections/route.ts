@@ -30,6 +30,9 @@ export async function GET(): Promise<NextResponse<DetectionResponseInterface>> {
             }
           }
         }
+      },
+      orderBy: {
+        timestamp: "desc"
       }
     });
 

@@ -108,12 +108,14 @@ interface DetectionResponseInterface {
 
 // Daily Detections Interface
 interface DailyDetectionsInterface {
-  labels: string[];
-  quantity: number[];
+  days: string[];
+  counts: number[];
 }
 
 // Dashboard Response Interface
 interface DashboardResponseInterface {
+  success: boolean;
+  message: string;
   dailyDetections: DailyDetectionsInterface;
   detections: DetectionInterface[];
 }
