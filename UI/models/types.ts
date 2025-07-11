@@ -106,6 +106,18 @@ interface DetectionResponseInterface {
   detections: DetectionInterface[];
 }
 
+// Daily Detections Interface
+interface DailyDetectionsInterface {
+  labels: string[];
+  quantity: number[];
+}
+
+// Dashboard Response Interface
+interface DashboardResponseInterface {
+  dailyDetections: DailyDetectionsInterface;
+  detections: DetectionInterface[];
+}
+
 export type {
   ResponseInterface,
   TokenInterface,
@@ -120,5 +132,7 @@ export type {
   VehiclesResponseInterface,
   RemoveVehicleInterface,
   DetectionInterface,
-  DetectionResponseInterface
+  DetectionResponseInterface,
+  DailyDetectionsInterface,
+  DashboardResponseInterface
 };

@@ -4,6 +4,7 @@ import { useState, useEffect, type ReactNode } from "react";
 import { redirect } from "next/navigation";
 //
 import Loader from "@components/Loader";
+import { formatDate } from "@helpers/date";
 import type { DetectionInterface, DetectionResponseInterface } from "@models/types";
 
 // Detection Table
@@ -51,15 +52,6 @@ export default function DetectionTable(): ReactNode {
         {x}
       </th>
     );
-  }
-
-  // Format Date
-  function formatDate(x: string): string[] {
-    const arr: string[] = x.split("T");
-    const date: string[] = arr[0].split("-");
-    const time: string[] = arr[1].split(".");
-
-    return [`${date[2]}/${date[1]}/${date[0]}`, time[0]];
   }
 
   // Row Mapper

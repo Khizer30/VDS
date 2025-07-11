@@ -3,22 +3,11 @@ import { useState, useEffect, type ReactNode } from "react";
 import { Chart, LineElement, CategoryScale, LinearScale, PointElement, ArcElement, Legend, Title } from "chart.js";
 import { Line, Doughnut } from "react-chartjs-2";
 //
-import type { DetectionInterface } from "@models/types";
+import { formatDate } from "@helpers/date";
+import type { DetectionInterface, DailyDetectionsInterface } from "@models/types";
 
 // Chart.JS
 Chart.register(LineElement, CategoryScale, LinearScale, PointElement, ArcElement, Legend, Title);
-
-// Daily Detections Interface
-interface DailyDetectionsInterface {
-  labels: string[];
-  quantity: number[];
-}
-
-// Daily Detections
-const dailyDetections: DailyDetectionsInterface = {
-  labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
-  quantity: [20, 16, 20, 21, 13, 0, 0]
-};
 
 // Detections
 const detections: DetectionInterface[] = [
@@ -27,7 +16,7 @@ const detections: DetectionInterface[] = [
     makeDetected: "Honda City",
     makeExpected: "Honda City",
     colourDetected: "Black",
-    colourExpected: "White",
+    colourExpected: "Black",
     numberPlate: "ZZ106",
     timestamp: new Date(Date.now())
   },
@@ -69,8 +58,41 @@ const detections: DetectionInterface[] = [
   }
 ];
 
+// Daily Detections
+const dailyDetections: DailyDetectionsInterface = {
+  labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+  quantity: [20, 16, 20, 21, 13, 0, 0]
+};
+
 // Dashboard
 export default function Dashboard(): ReactNode {
+  // Check Detection
+  function isSuspiciousDetection(detection: DetectionInterface) {
+    if (detection.makeDetected !== detection.makeExpected) {
+      return true;
+    } else if (detection.colourDetected !== detection.colourExpected) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // Split Detections
+  function splitDetections(arr: DetectionInterface[]): number[] {
+    let registerdCount: number = 0;
+    let suspiciousCount: number = 0;
+
+    for (let i: number = 0; i < arr.length; i++) {
+      if (isSuspiciousDetection(arr[i])) {
+        suspiciousCount++;
+      } else {
+        registerdCount++;
+      }
+    }
+
+    return [registerdCount, suspiciousCount];
+  }
+
   // Table Headingss
   const tableHeadings: string[] = ["Number Plate", "Vehicle's Make", "Vehicle's Colour", "Time", "Date"];
 
@@ -84,15 +106,6 @@ export default function Dashboard(): ReactNode {
         {x}
       </th>
     );
-  }
-
-  // Format Date
-  function formatDate(x: string): string[] {
-    const arr: string[] = x.split("T");
-    const date: string[] = arr[0].split("-");
-    const time: string[] = arr[1].split(".");
-
-    return [`${date[2]}/${date[1]}/${date[0]}`, time[0]];
   }
 
   // Row Mapper
@@ -175,7 +188,7 @@ export default function Dashboard(): ReactNode {
               labels: ["Registered Vehicles", "Suspicious Vehicles"],
               datasets: [
                 {
-                  data: [35, 10],
+                  data: splitDetections(detections),
                   backgroundColor: ["#51A2FF", "#FF6467"],
                   borderColor: ["#51A2FF", "#FF6467"],
                   borderWidth: 1,
@@ -216,7 +229,7 @@ export default function Dashboard(): ReactNode {
             <thead>
               <tr>{tableHeadings.map(headingMapper)}</tr>
             </thead>
-            <tbody>{detections.map(rowMapper)}</tbody>
+            <tbody>{detections.filter(isSuspiciousDetection).map(rowMapper)}</tbody>
           </table>
         </div>
       </div>
