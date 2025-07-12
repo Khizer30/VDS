@@ -137,7 +137,7 @@ export default function Layout({ children }: Props): ReactNode {
         className={`ml-auto h-screen px-4 py-2 transition-all duration-300 ease-in-out ${isSidebarOpen ? "md:w-2/3 lg:w-[75%] xl:w-[80%]" : "w-full"}`}
       >
         {/* Topbar */}
-        <div className="sticky top-0 z-10 flex h-[6%] items-center justify-center rounded-lg bg-gray-900 px-4 py-2 md:h-[5%]">
+        <div className="sticky top-0 z-10 flex h-[6vh] items-center justify-center rounded-lg bg-gray-900 px-4 py-2 md:h-[5vh]">
           <div className="flex h-full w-full items-center justify-between">
             <h1 className="font-primary px-3 text-sm text-white"> Salam, {user.name} </h1>
             <button
@@ -149,7 +149,7 @@ export default function Layout({ children }: Props): ReactNode {
           </div>
         </div>
         {/* Content */}
-        <div className="flex h-[94%] flex-col items-center justify-center px-4 py-2 md:h-[95%]"> {children} </div>
+        <div className="flex h-[93vh] flex-col items-center justify-center px-4 py-2 md:h-[94vh]"> {children} </div>
       </div>
     </>
   );

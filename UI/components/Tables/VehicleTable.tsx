@@ -120,7 +120,7 @@ export default function VehicleTable(): ReactNode {
       {loader && <Loader />}
       <div className="w-[95%] rounded-xl p-2 md:w-11/12 md:p-8 lg:w-5/6">
         <h1 className="font-primary mt-4 mb-8 text-center text-3xl font-medium"> View Vehicles </h1>
-        <div className="max-h-[80%] w-full overflow-x-scroll overflow-y-scroll">
+        <div className="h-[75vh] w-full overflow-x-scroll overflow-y-scroll">
           <table className="my-4 w-full table-auto">
             <thead>
               <tr>{tableHeadings.map(headingMapper)}</tr>
