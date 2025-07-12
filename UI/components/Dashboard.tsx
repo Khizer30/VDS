@@ -181,7 +181,7 @@ export default function Dashboard(): ReactNode {
                 plugins: {
                   title: {
                     display: true,
-                    text: "Today's Detected Vehicles",
+                    text: "Recent Detected Vehicles",
                     color: "#364153",
                     font: {
                       size: 14,
