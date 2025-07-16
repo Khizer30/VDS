@@ -16,6 +16,7 @@ export async function GET(): Promise<NextResponse<DetectionResponseInterface>> {
         colour: true,
         numberPlate: true,
         timestamp: true,
+        type: true,
         vehicle: {
           select: {
             make: {
@@ -44,7 +45,8 @@ export async function GET(): Promise<NextResponse<DetectionResponseInterface>> {
         colourDetected: data[i].colour,
         colourExpected: data[i].vehicle.colour.name,
         numberPlate: data[i].numberPlate,
-        timestamp: data[i].timestamp
+        timestamp: data[i].timestamp,
+        type: data[i].type
       };
 
       response.detections.push(tempDetection);

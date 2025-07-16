@@ -60,6 +60,7 @@ model Detection {
   numberPlate String   @default("")
   timestamp   DateTime @default(now())
   vehicleID   Int      @default(0)
+  type        String   @default("Entry")
 
   vehicle Vehicle @relation(fields: [vehicleID], references: [id], onDelete: Cascade)
 

@@ -97,6 +97,7 @@ interface DetectionInterface {
   colourDetected: string;
   numberPlate: string;
   timestamp: Date;
+  type: string;
 }
 
 // Detection Response Interface

@@ -40,14 +40,14 @@ export default function DetectionTable(): ReactNode {
   }, []);
 
   // Table Headingss
-  const tableHeadings: string[] = ["Number Plate", "Vehicle's Make", "Vehicle's Colour", "Time", "Date"];
+  const tableHeadings: string[] = ["Number Plate", "Vehicle's Make", "Vehicle's Colour", "Time", "Date", "Type"];
 
   // Heading Mapper
   function headingMapper(x: string, i: number): ReactNode {
     return (
       <th
         key={x}
-        className={`font-primary bg-gray-900 p-4 font-medium text-white ${i === 0 ? "rounded-tl-lg" : ""} ${i === 4 ? "rounded-tr-lg" : ""}`}
+        className={`font-primary bg-gray-900 p-4 font-medium text-white ${i === 0 ? "rounded-tl-lg" : ""} ${i === 5 ? "rounded-tr-lg" : ""}`}
       >
         {x}
       </th>
@@ -73,6 +73,7 @@ export default function DetectionTable(): ReactNode {
         </td>
         <td className="font-primary h-14 border border-gray-500 px-4"> {timestamp[1]} </td>
         <td className="font-primary h-14 border border-gray-500 px-4"> {timestamp[0]} </td>
+        <td className="font-primary h-14 border border-gray-500 px-4"> {x.type} </td>
       </tr>
     );
   }

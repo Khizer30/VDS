@@ -72,7 +72,7 @@ export default function Dashboard(): ReactNode {
   }
 
   // Table Headingss
-  const tableHeadings: string[] = ["Number Plate", "Vehicle's Make", "Vehicle's Colour", "Time", "Date"];
+  const tableHeadings: string[] = ["Number Plate", "Vehicle's Make", "Vehicle's Colour", "Time", "Date", "Type"];
 
   // Heading Mapper
   function headingMapper(x: string): ReactNode {
@@ -111,6 +111,7 @@ export default function Dashboard(): ReactNode {
         <td className="font-primary h-10 border border-gray-500 bg-white px-1 text-xs md:px-2 md:text-sm">
           {timestamp[0]}
         </td>
+        <td className="font-primary h-10 border border-gray-500 bg-white px-1 text-xs md:px-2 md:text-sm">{x.type}</td>
       </tr>
     );
   }
